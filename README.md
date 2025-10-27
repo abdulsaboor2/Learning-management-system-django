@@ -28,3 +28,27 @@ A Django-based LMS with courses → modules → lessons, downloadable resources,
 - pages/ # App: models, views, admin, forms, templates, static
 - media/ # Uploaded lesson resources & avatars (dev)
 - manage.py
+
+System Interface
+<img width="1351" height="3618" alt="127 0 0 1_8000_ (1)" src="https://github.com/user-attachments/assets/5de0f7b9-4c46-468e-aaa0-6995d577054b" />
+
+<img width="1351" height="646" alt="127 0 0 1_8000_register_" src="https://github.com/user-attachments/assets/ae3a8c8b-0ddb-445c-b006-9c10ee3ce58a" />
+
+<img width="1366" height="641" alt="127 0 0 1_8000_login_" src="https://github.com/user-attachments/assets/39d1ce33-ce9a-4367-a56a-e6487330423f" />
+
+<img width="1351" height="945" alt="127 0 0 1_8000_courses_" src="https://github.com/user-attachments/assets/5a7c441b-fae4-452a-97d5-b6c2c21d2b2f" />
+
+<img width="1351" height="1238" alt="127 0 0 1_8000_courses_full-stack-web-dev_" src="https://github.com/user-attachments/assets/9a22adef-70ab-461e-9cf3-c758dca493c8" />
+
+<img width="1366" height="641" alt="127 0 0 1_8000_dashboard_" src="https://github.com/user-attachments/assets/6675d8e4-55af-45fd-9888-7cc5cfd9a48a" />
+
+<img width="1351" height="4427" alt="127 0 0 1_8000_course_full-stack-web-dev_" src="https://github.com/user-attachments/assets/0c92d9b2-5ee0-408b-b664-5770f355457f" />
+
+<img width="1366" height="641" alt="_C__Users_ZAIIIN_Downloads_Learning_Management_System_Pages_templates_quiz_quiz1 html" src="https://github.com/user-attachments/assets/1cc207fd-8c43-4754-896f-eac488c59821" />
+
+
+
+
+
+
+
