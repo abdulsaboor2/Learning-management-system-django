@@ -1,0 +1,354 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ course.title }} • Rabbani CiC</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fonts (match your index) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --rcic-blue:#1e3a8a;
+      --rcic-blue-600:#2747a8;
+      --rcic-slate:#334155;
+      --rcic-ink:#0f172a;
+      --rcic-light:#f8fafc;
+      --rcic-border:#e5e7eb;
+    }
+    html,body{height:100%}
+    body{
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:#f6f7fb; color:var(--rcic-ink);
+    }
+
+    /* App layout */
+    .app{ min-height:100vh; display:flex; align-items:stretch }
+
+    /* Sidebar */
+    .sidebar{
+      width:260px; background:#0f172a; color:#e2e8f0; padding:16px 14px;
+      position:sticky; top:0; height:100vh; box-shadow:0 0 24px rgba(0,0,0,.18);
+      z-index:10; transform:translateX(0); transition:transform .25s ease
+    }
+    .brand-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px }
+    .brand-left{ display:flex; align-items:center; gap:10px }
+    .brand-title{ font-weight:700; letter-spacing:.3px; white-space:nowrap }
+    .brand-btn{
+      display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px;
+      border-radius:10px; border:1px solid #223052; background:#0b1223; color:#e2e8f0; cursor:pointer;
+    }
+    .brand-btn:hover,.brand-btn:focus{ background:rgba(255,255,255,.08); outline:none }
+
+    .side-search{ margin:8px 0 12px }
+    .side-search input{
+      width:100%; padding:10px 12px; border:1px solid #223052; border-radius:10px;
+      background:#0b1223; color:#e2e8f0
+    }
+    .nav-block h4{ font-size:.9rem; letter-spacing:.3px; text-transform:uppercase; color:#93a3bf; margin:10px 0 6px }
+    .snav{ list-style:none; padding:0; margin:0 }
+    .snav a{
+      display:flex; align-items:center; gap:10px; color:#e2e8f0; text-decoration:none;
+      padding:10px 12px; border-radius:10px;
+    }
+    .snav a:hover,.snav a:focus{ background:rgba(255,255,255,.08); outline:none }
+    .badge{
+      margin-left:auto; font-size:.76rem; padding:2px 8px; border-radius:999px;
+      background:#122044; color:#dbeafe; border:1px solid #1f2e57
+    }
+
+    /* Mobile toggle */
+    .side-toggle{
+      display:none; position:fixed; top:10px; left:10px; z-index:20;
+      background:linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600));
+      color:#fff; border:0; border-radius:10px; padding:10px 12px;
+      box-shadow:0 10px 24px rgba(30,58,138,.35)
+    }
+    .sidebar.open{ transform:translateX(0) }
+
+    /* Main */
+    .main{ flex:1; padding:18px }
+    .page-card{
+      background:#fff; border:1px solid #eef1f6; border-radius:1rem; padding:1.25rem;
+      box-shadow:0 8px 24px rgba(0,0,0,.06);
+    }
+
+    /* Progression bar */
+    .progression-wrap{ position:sticky; top: 12px; z-index: 5; margin-bottom:1rem }
+    .progression-bar{
+      display:flex; align-items:center; gap:.5rem; overflow:auto hidden; scrollbar-width:thin;
+      padding:.25rem; border-radius:.75rem;
+    }
+    .progress-line{ flex:1; height:2px; background: var(--rcic-border); min-width:40px }
+    .module-step{
+      min-width:56px; height:40px; background:#e9ecef; color:#0b1426; border:1px solid #e5e7eb;
+      border-radius:20px; display:flex; align-items:center; justify-content:center; font-weight:600;
+      padding:0 .75rem; cursor:pointer; user-select:none; white-space:nowrap; transition:all .25s
+    }
+    .module-step.active{
+      background:linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600));
+      color:#fff; min-width:110px; box-shadow:0 8px 20px rgba(30,58,138,.35)
+    }
+    .module-step.completed{ outline:2px solid #22c55e33 }
+    .btn-grad{
+      background:linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600));
+      border:0; color:#fff; font-weight:600; box-shadow:0 12px 26px rgba(30,58,138,.35);
+    }
+
+    /* Lesson blocks */
+    .lesson-content,.video-container,.resource-box{ max-width: 760px }
+    .video-container .ratio{ --bs-aspect-ratio: 60% }
+    .resource-box{
+      background:#f8f9fa; border:1px solid var(--rcic-border);
+      border-left:5px solid var(--rcic-blue); border-radius:.5rem; padding:.75rem 1rem; margin-bottom:1rem;
+    }
+    .notes-list{ list-style:none; padding:0; margin:0 }
+    .notes-list li{
+      display:flex; justify-content:space-between; align-items:center; gap:.5rem;
+      padding:.35rem 0; border-bottom:1px dashed #e9ecef;
+    }
+    .notes-list li:last-child{ border-bottom:none }
+    .lesson-actions{ display:flex; gap:.5rem; align-items:center; margin:.25rem 0 .75rem }
+    .mark-complete{
+      border:1px solid var(--rcic-border); border-radius:.5rem; padding:.25rem .6rem; background:#fff;
+    }
+    .mark-complete.completed{ background:#e6ffe6; border-color:#16a34a; color:#14532d; font-weight:600 }
+
+    footer{
+      background:#f1f1f1; border-top:1px solid #eaeaea; border-radius:.75rem;
+      padding:12px; margin-top:24px; text-align:center;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px){
+      .sidebar{
+        position:fixed; left:-100%; top:0; bottom:0; transform:none; width:280px;
+      }
+      .sidebar.open{ left:0 }
+      .side-toggle{ display:block }
+      .main{ padding-top:58px }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile toggle -->
+  <button class="side-toggle" id="sideToggle" aria-controls="sidebar" aria-expanded="false">☰ Menu</button>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="brand-header">
+        <div class="brand-left">
+          <img src="{% static 'img/aa.png' %}" alt="Rabbani CiC logo" width="28" height="28">
+          <span class="brand-title">Rabbani CiC</span>
+        </div>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="brand-btn" title="Logout">🚪</button>
+        </form>
+      </div>
+
+      <div class="side-search">
+        <input id="sideSearch" type="search" placeholder="Search..." aria-label="Sidebar search">
+      </div>
+
+      <div class="nav-block">
+        <h4>Navigation</h4>
+        <ul class="snav">
+          <li><a href="{% url 'dashboard' %}">🏠 Dashboard</a></li>
+          <li><a href="{% url 'courses_list' %}">📚 Courses</a></li>
+          <li><a href="{% url 'settings' %}">⚙️ Settings</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="page-card">
+        <h1 class="mb-1">{{ course.title }}</h1>
+        <p class="text-secondary mb-3">
+          {{ course.short_desc|default:"Track your progress, watch lessons, download resources, and test your knowledge." }}
+        </p>
+
+        <!-- Top stats -->
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <div class="p-2 px-3 bg-white border rounded-3"><div class="small text-muted">Modules</div><div class="fw-bold">{{ n_modules }}</div></div>
+          <div class="p-2 px-3 bg-white border rounded-3"><div class="small text-muted">Lessons</div><div class="fw-bold">{{ n_lessons }}</div></div>
+        </div>
+
+        <!-- Progression bar -->
+        <div class="progression-wrap">
+          <div class="progression-bar" id="progressionBar" role="tablist" aria-label="Course modules">
+            {% for m in modules %}
+              <button class="module-step {% if forloop.first %}active{% endif %}"
+                      data-target="#module{{ m.index }}"
+                      role="tab"
+                      aria-controls="module{{ m.index }}"
+                      aria-selected="{{ forloop.first|yesno:'true,false' }}">
+                Module {{ m.index }}
+              </button>
+              {% if not forloop.last %}<div class="progress-line"></div>{% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Modules & lessons -->
+        {% for m in modules %}
+          <section id="module{{ m.index }}" class="mb-5" tabindex="-1">
+            <h2 class="h4">Module {{ m.index }}{% if m.title %}: {{ m.title }}{% endif %}</h2>
+            {% if m.intro %}<p class="lead lesson-content">{{ m.intro }}</p>{% endif %}
+
+            {% for l in m.lessons.all %}
+              <article class="lesson-content">
+                <header class="d-flex align-items-center justify-content-between">
+                  <h3 class="h5 mb-1">Lesson {{ l.index }}: {{ l.title }}</h3>
+                  <div class="lesson-actions">
+                    <button
+                      class="mark-complete btn btn-sm {% if l.id in completed_ids %}completed{% endif %}"
+                      data-lesson="{{ l.id }}">
+                      {% if l.id in completed_ids %}Completed ✓{% else %}Mark complete{% endif %}
+                    </button>
+                  </div>
+                </header>
+
+                {% if l.summary %}<p>{{ l.summary }}</p>{% endif %}
+
+                {% if l.youtube_url %}
+                  <div class="video-container mb-2">
+                    <div class="ratio">
+                      <iframe src="{{ l.youtube_url }}"
+                              title="{{ l.title }}" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% if l.resources.all %}
+                  <div class="resource-box">
+                    <h6>Lesson Resources</h6>
+                    <ul class="notes-list">
+                      {% for r in l.resources.all %}
+                        <li>
+                          <span>📄 {{ r.name }}</span>
+                          {% if r.file %}
+                            <a class="btn btn-sm btn-outline-primary" href="{{ r.file.url }}" target="_blank" rel="noopener">Download</a>
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+              </article>
+            {% empty %}
+              <div class="text-muted">Lessons will be published soon.</div>
+            {% endfor %}
+          </section>
+        {% empty %}
+          <div class="alert alert-info mb-0">Curriculum will be published soon.</div>
+        {% endfor %}
+
+        <footer class="small">
+          <p class="mb-0">Copyright © <span id="year"></span>
+            <a class="text-decoration-none" href="{% url 'index' %}">Rabbani CiC</a> — All Rights Reserved
+          </p>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script id="moduleLessons" type="application/json">{{ module_lessons_json|safe }}</script>
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sideToggle');
+    toggleBtn.addEventListener('click', () => {
+      const open = sidebar.classList.toggle('open');
+      toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // CSRF cookie
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    // Toggle completion -> POST to API
+    document.querySelectorAll('.mark-complete').forEach(btn => {
+      const lessonId = btn.dataset.lesson;
+      btn.addEventListener('click', async () => {
+        const setTo = !btn.classList.contains('completed');
+        try {
+          const res = await fetch("{% url 'api_toggle_lesson' %}", {
+            method: "POST",
+            headers: { "X-CSRFToken": csrftoken, "Accept":"application/json" },
+            body: new URLSearchParams({ lesson_id: lessonId, completed: String(setTo) })
+          });
+          if (!res.ok) throw new Error('Network');
+          const data = await res.json();
+          if (data.ok) {
+            btn.classList.toggle('completed', data.completed);
+            btn.textContent = data.completed ? 'Completed ✓' : 'Mark complete';
+            updateModuleCompletionBadges();
+          }
+        } catch (e) { console.error(e); }
+      });
+    });
+
+    // Badge when all lessons in a module are done
+    function updateModuleCompletionBadges(){
+      const steps = Array.from(document.querySelectorAll('.module-step'));
+      const meta = JSON.parse(document.getElementById('moduleLessons').textContent || "[]");
+      steps.forEach(btn => {
+        const anchor = (btn.getAttribute('data-target') || '').replace('#','');
+        const m = meta.find(x => x.anchor === anchor);
+        if (!m) return;
+        const allDone = m.lesson_ids.length > 0 && m.lesson_ids.every(id => {
+          const b = document.querySelector('.mark-complete[data-lesson="'+id+'"]');
+          return b && b.classList.contains('completed');
+        });
+        btn.classList.toggle('completed', allDone);
+        btn.title = allDone ? 'All lessons complete' : '';
+      });
+    }
+    updateModuleCompletionBadges();
+
+    // Progression: highlight active module by scroll
+    const moduleSections = Array.from(document.querySelectorAll('section[id^="module"]'));
+    const stepButtons = Array.from(document.querySelectorAll('.module-step'));
+    function setActiveById(id){
+      stepButtons.forEach(btn => {
+        const target = btn.getAttribute('data-target');
+        const active = target === ('#' + id);
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    }
+    const io = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting)
+                             .sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if(visible[0]) setActiveById(visible[0].target.id);
+    }, { rootMargin: "-30% 0px -60% 0px", threshold: 0.01 });
+    moduleSections.forEach(s => io.observe(s));
+
+    // Click to scroll
+    stepButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sel = btn.getAttribute('data-target');
+        const target = document.querySelector(sel);
+        if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); target.focus({preventScroll:true}); }
+      });
+    });
+  </script>
+</body>
+</html>

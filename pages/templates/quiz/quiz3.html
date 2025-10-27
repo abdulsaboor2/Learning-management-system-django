@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 Question Quiz</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+.question { display: none; margin-bottom: 20px; }
+.correct { color: green; font-weight: bold; }
+.incorrect { color: red; font-weight: bold; }
+.pass { color: green; font-size: 18px; font-weight: bold; }
+.fail { color: red; font-size: 18px; font-weight: bold; }
+button { margin-top: 20px; padding: 10px 20px; }
+</style>
+</head>
+<body>
+<h1>10 Question Quiz</h1>
+<form id="quizForm">
+<!-- Question 1 -->
+<div class="question" id="q1Box">
+<p>Which of the following is an example of an inline element?</p>
+<label><input type="radio" name="q1" value="7"> &lt;nav&gt;</label><br>
+<label><input type="radio" name="q1" value="8"> &lt;p&gt;</label><br>
+<label><input type="radio" name="q1" value="9"> &lt;span&gt;</label><br>
+<label><input type="radio" name="q1" value="6"> &lt;table&gt;</label>
+<p class="feedback" id="f1"></p>
+<button type="button" onclick="nextQuestion(1)">Next</button>
+</div>
+
+
+<!-- Question 2 -->
+<div class="question" id="q2Box">
+<p>Which of the following is an example of a block level element?</p>
+<label><input type="radio" name="q2" value="7"> &lt;span&gt;</label><br>
+<label><input type="radio" name="q2" value="8"> &lt;div&gt;</label><br>
+<label><input type="radio" name="q2" value="9"> &lt;a&gt;</label><br>
+<label><input type="radio" name="q2" value="6"> &lt;br&gt;</label><br>
+<p class="feedback" id="f2"></p>
+<button type="button" onclick="nextQuestion(2)">Next</button>
+</div>
+
+
+<!-- Question 3 -->
+<div class="question" id="q3Box">
+<p>We can use the ____ tag in the event that we would like to move onto a new line in our HTML script.</p>
+<label><input type="radio" name="q3" value="7"> &lt;br&gt;</label><br>
+<label><input type="radio" name="q3" value="8"> &lt;span&gt;</label><br>
+<label><input type="radio" name="q3" value="9"> &lt;em&gt;</label><br>
+<label><input type="radio" name="q3" value="6"> &lt;strong&gt;</label><br>
+<p class="feedback" id="f3"></p>
+<button type="button" onclick="nextQuestion(3)">Next</button>
+</div>
+
+
+<!-- Question 4 -->
+<div class="question" id="q4Box">
+<p>In order to group list items &lt;li&gt; for the use of building a navigation bar, we can wrap the list items inside of a ______ element.</p>
+<label><input type="radio" name="q4" value="7"> &lt;span&gt;</label><br>
+<label><input type="radio" name="q4" value="8"> &lt;main&gt;</label><br>
+<label><input type="radio" name="q4" value="9"> &lt;hr&gt;</label><br>
+<label><input type="radio" name="q4" value="6"> &lt;nav&gt;</label><br>
+<p class="feedback" id="f4"></p>
+<button type="button" onclick="nextQuestion(4)">Next</button>
+</div>
+
+
+<!-- Question 5 -->
+<div class="question" id="q5Box">
+<p>Which of the following tags are ideal for listing a sequence of steps on a website?</p>
+<label><input type="radio" name="q5" value="7"> &lt;ol&gt;</label><br>
+<label><input type="radio" name="q5" value="8"> &lt;nav&gt;</label><br>
+<label><input type="radio" name="q5" value="9"> &lt;ul&gt;</label><br>
+<label><input type="radio" name="q5" value="6"> None of the above</label><br>
+<p class="feedback" id="f5"></p>
+<button type="button" onclick="nextQuestion(5)">Next</button>
+</div>
+
+
+<!-- Question 6 -->
+<div class="question" id="q6Box">
+<p>When developing a navigation system for a website, it is important to reference other HTML files correctly using the "href" attribute because _______.</p>
+<label><input type="radio" name="q6" value="7"> the "href" attribute is path sensitive</label><br>
+<label><input type="radio" name="q6" value="8"> the "href" attribute is not path sensitive</label><br>
+<label><input type="radio" name="q6" value="9"> the navigation system requires extensive CSS code</label><br>
+<label><input type="radio" name="q6" value="6"> the HTML files are case sensitive</label><br>
+<p class="feedback" id="f6"></p>
+<button type="button" onclick="nextQuestion(6)">Next</button>
+</div>
+
+
+<!-- Question 7 -->
+<div class="question" id="q7Box">
+<p>To insert comments in an HTML document, which of the following notations should you use?</p>
+<label><input type="radio" name="q7" value="7"> comment here</label><br>
+<label><input type="radio" name="q7" value="8"> //comment here</label><br>
+<label><input type="radio" name="q7" value="9"> &lt;!--comment here--&gt;</label><br>
+<label><input type="radio" name="q7" value="6"> **comment here</label><br>
+<p class="feedback" id="f7"></p>
+<button type="button" onclick="nextQuestion(7)">Next</button>
+</div>
+
+
+<!-- Question 8 -->
+<div class="question" id="q8Box">
+<p>A navigation system uses _______ to allow users to navigate between web pages.</p>
+<label><input type="radio" name="q8" value="7"> hyperlinking</label><br>
+<label><input type="radio" name="q8" value="8"> HTML scripts</label><br>
+<label><input type="radio" name="q8" value="9"> an obsolete client</label><br>
+<label><input type="radio" name="q8" value="6"> a server</label><br>
+<p class="feedback" id="f8"></p>
+<button type="button" onclick="nextQuestion(8)">Next</button>
+</div>
+
+
+<!-- Question 9 -->
+<div class="question" id="q9Box">
+<p>Comments are ideal for letting other developers know what the purpose of your code is.</p>
+<label><input type="radio" name="q9" value="7"> True</label><br>
+<label><input type="radio" name="q9" value="8"> False</label><br>
+<p class="feedback" id="f9"></p>
+<button type="button" onclick="nextQuestion(9)">Next</button>
+</div> 
+
+<!-- Question 10 -->
+<div class="question" id="q10Box">
+<p>The &lt;div&gt; element is basically ________.</p>
+<label><input type="radio" name="q10" value="7"> an empty container</label><br>
+<label><input type="radio" name="q10" value="8"> a form of multimedia</label><br>
+<label><input type="radio" name="q10" value="9"> a text based element</label><br>
+<label><input type="radio" name="q10" value="6"> all of the above</label><br>
+<p class="feedback" id="f10"></p>
+<button type="button" onclick="nextQuestion(10)">Next</button>
+</div>
+</form>
+
+
+<h2 id="score"></h2>
+<h2 id="result"></h2>
+
+
+<script>
+const answers = {
+q1: "9",
+q2: "8",
+q3: "7",
+q4: "6",
+q5: "7",
+q6: "7",
+q7: "9",
+q8: "7",
+q9: "7",
+q10: "7",
+// Add correct answers for q3 - q20 here
+};
+
+
+let score = 0;
+let total = Object.keys(answers).length;
+let currentQuestion = 1;
+
+
+// Show first question
+document.getElementById("q1Box").style.display = "block";
+
+
+function nextQuestion(num) {
+const selected = document.querySelector(`input[name="q${num}"]:checked`);
+const feedback = document.getElementById("f" + num);
+
+
+if (selected) {
+if (selected.value === answers[`q${num}`]) {
+feedback.textContent = "Correct!";
+feedback.className = "feedback correct";
+score++;
+} else {
+feedback.textContent = "Incorrect!";
+feedback.className = "feedback incorrect";
+}
+} else {
+feedback.textContent = "No answer selected.";
+feedback.className = "feedback incorrect";
+}
+
+
+// Hide current question after feedback delay, show next
+setTimeout(() => {
+document.getElementById(`q${num}Box`).style.display = "none";
+if (num < total) {
+document.getElementById(`q${num + 1}Box`).style.display = "block";
+} else {
+finishQuiz();
+}
+}, 1000);
+}
+
+
+function finishQuiz() {
+const percentage = (score / total) * 100;
+document.getElementById("score").textContent = `You scored ${score} out of ${total} (${percentage.toFixed(0)}%)`;
+
+
+if (percentage >= 60) {
+document.getElementById("result").textContent = "Congratulations! You Passed.";
+document.getElementById("result").className = "pass";
+} else {
+document.getElementById("result").textContent = "Sorry, You Failed.";
+document.getElementById("result").className = "fail";
+}
+}
+</script>
+</body>
+</html>

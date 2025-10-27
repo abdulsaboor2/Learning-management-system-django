@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>20 Question Quiz</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+.question { display: none; margin-bottom: 20px; }
+.correct { color: green; font-weight: bold; }
+.incorrect { color: red; font-weight: bold; }
+.pass { color: green; font-size: 18px; font-weight: bold; }
+.fail { color: red; font-size: 18px; font-weight: bold; }
+button { margin-top: 20px; padding: 10px 20px; }
+</style>
+</head>
+<body>
+<h1>20 Question Quiz</h1>
+<form id="quizForm">
+<!-- Question 1 -->
+<div class="question" id="q1Box">
+<p>One of the most common characteristics among all HTML tags is that all tags consist of a opening and closing tag.</p>
+<label><input type="radio" name="q1" value="1"> True</label><br>
+<label><input type="radio" name="q1" value="2"> False</label><br>
+<p class="feedback" id="f1"></p>
+<button type="button" onclick="nextQuestion(1)">Next</button>
+</div>
+
+
+<!-- Question 2 -->
+<div class="question" id="q2Box">
+<p>In order to style web pages, web developers often use ________.</p>
+<label><input type="radio" name="q2" value="7"> style sheets
+</label><br>
+<label><input type="radio" name="q2" value="8"> Adobe Photoshop
+</label><br>
+<label><input type="radio" name="q2" value="9"> style selectors
+</label><br>
+<label><input type="radio" name="q2" value="6"> additional HTML documents</label><br>
+<p class="feedback" id="f2"></p>
+<button type="button" onclick="nextQuestion(2)">Next</button>
+</div>
+
+
+<!-- Question 3 -->
+<div class="question" id="q3Box">
+<p>When it comes to designing a graphical user interface (GUI), developers must always consider the following __________.</p>
+<label><input type="radio" name="q3" value="7"> a strong focus on user acceptance
+</label><br>
+<label><input type="radio" name="q3" value="8"> a strong focus on UX and UI
+</label><br>
+<label><input type="radio" name="q3" value="9"> the use of graphical elements
+</label><br>
+<label><input type="radio" name="q3" value="6"> all of the above</label><br>
+<p class="feedback" id="f3"></p>
+<button type="button" onclick="nextQuestion(3)">Next</button>
+</div>
+
+
+<!-- Question 4 -->
+<div class="question" id="q4Box">
+<p>Hypertext Markup Language (HTML) is the standard markup language for creating ________.</p>
+<label><input type="radio" name="q4" value="7"> mobile application user interfaces
+</label><br>
+<label><input type="radio" name="q4" value="8"> mobile prototypes
+</label><br>
+<label><input type="radio" name="q4" value="9"> web pages
+</label><br>
+<label><input type="radio" name="q4" value="6"> wireframes</label><br>
+<p class="feedback" id="f4"></p>
+<button type="button" onclick="nextQuestion(4)">Next</button>
+</div>
+
+
+<!-- Question 5 -->
+<div class="question" id="q5Box">
+<p>Which of the following is not a characteristic of HTML?</p>
+<label><input type="radio" name="q5" value="7"> Elements/tags have attributes.
+</label><br>
+<label><input type="radio" name="q5" value="8"> Semantically defines web pages.
+</label><br>
+<label><input type="radio" name="q6" value="9"> Allows developers to embed JavaScript.
+</label><br>
+<label><input type="radio" name="q6" value="6"> None of the above</label><br>
+<p class="feedback" id="f5"></p>
+<button type="button" onclick="nextQuestion(5)">Next</button>
+</div>
+
+
+<!-- Question 6 -->
+<div class="question" id="q6Box">
+<p>The latest revision of HTML enables cross-platform implementation for low-powered devices.</p>
+<label><input type="radio" name="q6" value="7"> True</label><br>
+<label><input type="radio" name="q6" value="8"> False</label><br>
+<p class="feedback" id="f6"></p>
+<button type="button" onclick="nextQuestion(6)">Next</button>
+</div>
+
+
+<!-- Question 7 -->
+<div class="question" id="q7Box">
+<p>Which of the following best describes the use of the <nav> tag?</p>
+<label><input type="radio" name="q7" value="7"> Defines a section in a document
+</label><br>
+<label><input type="radio" name="q7" value="8"> A dummy element which contains block-level elements.
+</label><br>
+<label><input type="radio" name="q7" value="9"> Semantically defines web page.
+</label><br>
+<label><input type="radio" name="q7" value="6"> Defines navigation links.</label><br>
+<p class="feedback" id="f7"></p>
+<button type="button" onclick="nextQuestion(7)">Next</button>
+</div>
+
+
+<!-- Question 8 -->
+<div class="question" id="q8Box">
+<p>Which of the following tags is used to communicate to the browser that the document currently being rendered as an HTML document?</p>
+<label><input type="radio" name="q8" value="7"> <head>
+</label><br>
+<label><input type="radio" name="q8" value="8"> <!DOCTYPE html>
+</label><br>
+<label><input type="radio" name="q8" value="9"> <main>
+</label><br>
+<label><input type="radio" name="q8" value="6"> h1</label><br>
+<p class="feedback" id="f8"></p>
+<button type="button" onclick="nextQuestion(8)">Next</button>
+</div>
+
+
+<!-- Question 9 -->
+<div class="question" id="q9Box">
+<p>From the list below, select the web development scripting tool that is not compatible with macOS.</p>
+<label><input type="radio" name="q9" value="7"> ATOM
+</label><br>
+<label><input type="radio" name="q9" value="8"> Microsoft Visual Studio Code
+</label><br>
+<label><input type="radio" name="q9" value="9"> Sublime Text
+</label><br>
+<label><input type="radio" name="q9" value="6"> TNotepad++</label><br>
+<p class="feedback" id="f9"></p>
+<button type="button" onclick="nextQuestion(9)">Next</button>
+</div> 
+
+<!-- Question 10 -->
+<div class="question" id="q10Box">
+<p>The <footer> tag is generally used at the _________.</p>
+<label><input type="radio" name="q10" value="7"> top of most web pages
+</label><br>
+<label><input type="radio" name="q10" value="8"> center of most web pages
+</label><br>
+<label><input type="radio" name="q10" value="9"> bottom of most web pages
+</label><br>
+<label><input type="radio" name="q10" value="6"> end of a navigation bar</label><br>
+<p class="feedback" id="f10"></p>
+<button type="button" onclick="nextQuestion(10)">Next</button>
+</div>
+
+
+<!-- Question 11 -->
+<div class="question" id="q11Box">
+<p>Which of the following is true for packet switched networks?</p>
+<label><input type="radio" name="q11" value="7"> Files are sent directly from one node to the receiver.</label><br>
+<label><input type="radio" name="q11" value="8"> Files are massive and can't be broken down.</label><br>
+<label><input type="radio" name="q11" value="9"> Files are broken down into smaller packages and distributed over a network until it reaches the receiver.</label><br>
+<label><input type="radio" name="q11" value="6"> None of the above</label><br>
+<p class="feedback" id="f11"></p>
+<button type="button" onclick="nextQuestion(11)">Next</button>
+</div>
+
+
+
+<!-- Question 12 -->
+<div class="question" id="q12Box">
+<p>Which of the following is true for packet switched networks?</p>
+<label><input type="radio" name="q12" value="7"> True</label><br>
+<label><input type="radio" name="q12" value="8"> False</label><br>
+<p class="feedback" id="f12"></p>
+<button type="button" onclick="nextQuestion(12)">Next</button>
+</div>
+
+
+
+
+
+<!-- Question 13 -->
+<div class="question" id="q13Box">
+<p>Which of the following is true for packet switched networks?</p>
+<label><input type="radio" name="q13" value="7"> Files are sent directly from one node to the receiver.</label><br>
+<label><input type="radio" name="q13" value="8"> Files are massive and can't be broken down.</label><br>
+<label><input type="radio" name="q13" value="9"> Files are broken down into smaller packages and distributed over a network until it reaches the receiver.</label><br>
+<label><input type="radio" name="q13" value="6"> None of the above</label><br>
+<p class="feedback" id="f13"></p>
+<button type="button" onclick="nextQuestion(13)">Next</button>
+</div>
+
+
+<!-- Question 14 -->
+<div class="question" id="q14Box">
+<p>Which of the following is true for packet switched networks?</p>
+<label><input type="radio" name="q14" value="7"> Files are sent directly from one node to the receiver.</label><br>
+<label><input type="radio" name="q14" value="8"> Files are massive and can't be broken down.</label><br>
+<label><input type="radio" name="q14" value="9"> Files are broken down into smaller packages and distributed over a network until it reaches the receiver.</label><br>
+<label><input type="radio" name="q14" value="6"> None of the above</label><br>
+<p class="feedback" id="f14"></p>
+<button type="button" onclick="nextQuestion(14)">Next</button>
+</div>
+
+
+<!-- Question 15 -->
+<div class="question" id="q15Box">
+<p>Which of the following is true for packet switched networks?</p>
+<label><input type="radio" name="q15" value="7"> Files are sent directly from one node to the receiver.</label><br>
+<label><input type="radio" name="q15" value="8"> Files are massive and can't be broken down.</label><br>
+<label><input type="radio" name="q15" value="9"> Files are broken down into smaller packages and distributed over a network until it reaches the receiver.</label><br>
+<label><input type="radio" name="q15" value="6"> None of the above</label><br>
+<p class="feedback" id="f15"></p>
+<button type="button" onclick="nextQuestion(15)">Next</button>
+</div>
+
+
+<!-- Question 16 -->
+<div class="question" id="q16Box">
+<p>Which of the following is true for packet switched networks?</p>
+<label><input type="radio" name="q16" value="7"> Files are sent directly from one node to the receiver.</label><br>
+<label><input type="radio" name="q16" value="8"> Files are massive and can't be broken down.</label><br>
+<label><input type="radio" name="q16" value="9"> Files are broken down into smaller packages and distributed over a network until it reaches the receiver.</label><br>
+<label><input type="radio" name="q16" value="6"> None of the above</label><br>
+<p class="feedback" id="f16"></p>
+<button type="button" onclick="nextQuestion(16)">Next</button>
+</div>
+
+
+<!-- Question 17 -->
+<div class="question" id="q17Box">
+<p>Which of the following is true for packet switched networks?</p>
+<label><input type="radio" name="q17" value="7"> Files are sent directly from one node to the receiver.</label><br>
+<label><input type="radio" name="q17" value="8"> Files are massive and can't be broken down.</label><br>
+<label><input type="radio" name="q17" value="9"> Files are broken down into smaller packages and distributed over a network until it reaches the receiver.</label><br>
+<label><input type="radio" name="q17" value="6"> None of the above</label><br>
+<p class="feedback" id="f17"></p>
+<button type="button" onclick="nextQuestion(17)">Next</button>
+</div>
+
+
+<!-- Question 18 -->
+<div class="question" id="q18Box">
+<p>Which of the following is true for packet switched networks?</p>
+<label><input type="radio" name="q18" value="7"> Files are sent directly from one node to the receiver.</label><br>
+<label><input type="radio" name="q18" value="8"> Files are massive and can't be broken down.</label><br>
+<label><input type="radio" name="q18" value="9"> Files are broken down into smaller packages and distributed over a network until it reaches the receiver.</label><br>
+<label><input type="radio" name="q18" value="6"> None of the above</label><br>
+<p class="feedback" id="f18"></p>
+<button type="button" onclick="nextQuestion(18)">Next</button>
+</div>
+
+
+<!-- Question 19 -->
+<div class="question" id="q19Box">
+<p>Which of the following is true for packet switched networks?</p>
+<label><input type="radio" name="q19" value="7"> Files are sent directly from one node to the receiver.</label><br>
+<label><input type="radio" name="q19" value="8"> Files are massive and can't be broken down.</label><br>
+<label><input type="radio" name="q19" value="9"> Files are broken down into smaller packages and distributed over a network until it reaches the receiver.</label><br>
+<label><input type="radio" name="q19" value="6"> None of the above</label><br>
+<p class="feedback" id="f19"></p>
+<button type="button" onclick="nextQuestion(19)">Next</button>
+</div>
+
+
+<!-- Question 20 -->
+<div class="question" id="q20Box">
+<p>Which of the following is true for packet switched networks?</p>
+<label><input type="radio" name="q20" value="7"> Files are sent directly from one node to the receiver.</label><br>
+<label><input type="radio" name="q20" value="8"> Files are massive and can't be broken down.</label><br>
+<label><input type="radio" name="q20" value="9"> Files are broken down into smaller packages and distributed over a network until it reaches the receiver.</label><br>
+<label><input type="radio" name="q20" value="6"> None of the above</label><br>
+<p class="feedback" id="f20"></p>
+<button type="button" onclick="nextQuestion(20)">Next</button>
+</div>
+
+
+</form>
+
+
+<h2 id="score"></h2>
+<h2 id="result"></h2>
+
+
+<script>
+const answers = {
+q1: "2",
+q2: "7",
+q3: "6",
+q4: "9",
+q5: "6",
+q6: "7",
+q7: "6",
+q8: "8",
+q9: "6",
+q10: "9",
+q11: "a",
+q12: "a",
+q13: "a",
+q14: "a",
+q15: "a",
+q16: "a",
+q17: "a",
+q18: "a",
+q19: "a",
+q20: "a",
+// Add correct answers for q3 - q20 here
+};
+
+
+let score = 0;
+let total = Object.keys(answers).length;
+let currentQuestion = 1;
+
+
+// Show first question
+document.getElementById("q1Box").style.display = "block";
+
+
+function nextQuestion(num) {
+const selected = document.querySelector(`input[name="q${num}"]:checked`);
+const feedback = document.getElementById("f" + num);
+
+
+if (selected) {
+if (selected.value === answers[`q${num}`]) {
+feedback.textContent = "Correct!";
+feedback.className = "feedback correct";
+score++;
+} else {
+feedback.textContent = "Incorrect!";
+feedback.className = "feedback incorrect";
+}
+} else {
+feedback.textContent = "No answer selected.";
+feedback.className = "feedback incorrect";
+}
+
+
+// Hide current question after feedback delay, show next
+setTimeout(() => {
+document.getElementById(`q${num}Box`).style.display = "none";
+if (num < total) {
+document.getElementById(`q${num + 1}Box`).style.display = "block";
+} else {
+finishQuiz();
+}
+}, 1000);
+}
+
+
+function finishQuiz() {
+const percentage = (score / total) * 100;
+document.getElementById("score").textContent = `You scored ${score} out of ${total} (${percentage.toFixed(0)}%)`;
+
+
+if (percentage >= 60) {
+document.getElementById("result").textContent = "Congratulations! You Passed.";
+document.getElementById("result").className = "pass";
+} else {
+document.getElementById("result").textContent = "Sorry, You Failed.";
+document.getElementById("result").className = "fail";
+}
+}
+</script>
+</body>
+</html>

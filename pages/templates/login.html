@@ -1,0 +1,308 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Login • Rabbani CiC</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <!-- Google Fonts: UI + Brand -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --rcic-blue: #1e3a8a;
+      /* deep indigo/blue */
+      --rcic-blue-600: #2747a8;
+      --rcic-slate: #334155;
+      /* slate gray */
+      --rcic-ink: #0f172a;
+      /* near-black */
+      --rcic-light: #f8fafc;
+      /* very light gray for bg */
+      --rcic-white: #ffffff;
+      --rcic-focus: #60a5fa;
+      /* focus ring */
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(39, 71, 168, .25), transparent 60%),
+        radial-gradient(900px 400px at -10% 110%, rgba(51, 65, 85, .25), transparent 60%),
+        linear-gradient(180deg, #0b1020, #141a32 40%, #0f172a 100%);
+      color: var(--rcic-white);
+    }
+
+    .page-wrap {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    /* Card with subtle glassmorphism */
+    .login-card {
+      max-width: 440px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, .35);
+      overflow: hidden;
+    }
+
+    .login-card .card-body {
+      padding: 32px 28px 28px;
+    }
+
+    /* Brand */
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 10px;
+      color: var(--rcic-white);
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .25));
+    }
+
+    .brand-title {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 600;
+      font-style: italic;
+      font-size: 1.9rem;
+      letter-spacing: .2px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .subtle {
+      color: #cbd5e1;
+      font-size: .92rem;
+    }
+
+    /* Form */
+    .form-label {
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+
+    .form-control,
+    .form-select {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--rcic-white);
+    }
+
+    .form-control::placeholder {
+      color: #cbd5e175;
+    }
+
+    .form-control:focus {
+      border-color: var(--rcic-focus);
+      box-shadow: 0 0 0 .25rem rgba(96, 165, 250, .25);
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--rcic-white);
+    }
+
+    /* Password visibility button */
+    .input-group .btn-toggle {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #e2e8f0;
+    }
+
+    .input-group .btn-toggle:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+
+    /* Primary action */
+    .btn-rcic {
+      background: linear-gradient(135deg, var(--rcic-blue), var(--rcic-blue-600));
+      border: 0;
+      color: var(--rcic-white);
+      font-weight: 600;
+      letter-spacing: .4px;
+      box-shadow: 0 10px 25px rgba(30, 58, 138, .45);
+    }
+
+    .btn-rcic:hover {
+      filter: brightness(1.05);
+    }
+
+    .btn-rcic:active {
+      transform: translateY(1px);
+    }
+
+    .btn-ghost {
+      color: #e2e8f0;
+      text-decoration: none;
+    }
+
+    .btn-ghost:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* Helpers */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
+      margin: 18px 0 12px;
+    }
+
+    .center-container {
+      text-align: center;
+    }
+
+  </style>
+</head>
+
+<body>
+  {% if user.is_authenticated %}
+    <script>window.location.href = "{% url 'dashboard' %}";</script>
+  {% endif %}
+  <main class="page-wrap">
+    <div class="login-card">
+      <div style="position: absolute; top: 8px; left: 10px; font-size: 0.7rem;">
+        <a href="{% url 'index' %}" class="btn-ghost"> ← Go Back</a>
+      </div>
+      <div class="card-body">
+        <!-- Brand / Logo -->
+        <a class="brand" href="#">
+          <!-- Use your blue/black/gray logo (SVG/PNG). SVG recommended for crisp scaling. -->
+          <img src="{% static 'img/aa.png' %}" alt="Rabbani CiC logo">
+          <span class="brand-title">Rabbani CiC</span>
+        </a>
+        <p class="text-center subtle mb-4">Welcome back — please sign in to continue.</p>
+
+        <!-- Login Form -->
+        <form id="loginForm" method="post" action="{% url 'login' %}" novalidate>
+          {% csrf_token %}
+
+          {# Show non-field errors (e.g., "Please enter a correct username and password.") #}
+          {% if form and form.non_field_errors %}
+            <div class="alert alert-danger py-2" role="alert">
+              {{ form.non_field_errors|striptags }}
+            </div>
+          {% endif %}
+
+          <div class="mb-3">
+            <label for="id_username" class="form-label">Email address</label>
+            <input
+              type="text"
+              class="form-control"
+              id="id_username"
+              name="username"
+              placeholder="you@example.com"
+              autocomplete="username"
+              required
+            />
+            <div class="invalid-feedback">Please enter your email.</div>
+          </div>
+
+          <div class="mb-2">
+            <label for="id_password" class="form-label">Password</label>
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control"
+                id="id_password"
+                name="password"
+                placeholder="Your password"
+                autocomplete="current-password"
+                minlength="6"
+                required
+              />
+              <button type="button" class="btn btn-toggle" id="togglePassword" aria-label="Show password" title="Show/Hide password">
+                <i class="bi bi-eye"></i>
+              </button>
+              <div class="invalid-feedback">Password must be at least 6 characters.</div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="on" id="rememberMe" name="remember">
+              <label class="form-check-label subtle" for="rememberMe">Remember me</label>
+            </div>
+            
+          </div>
+
+          <button id="submitBtn" type="submit" class="btn btn-rcic w-100 py-2">
+            <span class="btn-text">Login</span>
+            <span class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+          </button>
+
+          <div class="divider"></div>
+          <div class="center-container">
+            <div class="col-12 mt-3">
+              <p class="small-muted mb-0">Don't have an account? <a class="link" href="{% url 'register' %}">Register now</a></p>
+            </div>
+          </div>
+          
+        </form>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Show / Hide password
+    const pwd = document.getElementById('id_password');
+    const toggleBtn = document.getElementById('togglePassword');
+    toggleBtn.addEventListener('click', () => {
+      const isPwd = pwd.type === 'password';
+      pwd.type = isPwd ? 'text' : 'password';
+      toggleBtn.innerHTML = isPwd ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+      toggleBtn.setAttribute('aria-label', isPwd ? 'Hide password' : 'Show password');
+    });
+
+    // Client-side validation (optional)
+    const form = document.getElementById('loginForm');
+    form.addEventListener('submit', (e) => {
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        form.classList.add('was-validated');
+      }
+    });
+
+    // Remember me → session expiry
+    const remember = document.getElementById('rememberMe');
+    if (remember) {
+      remember.addEventListener('change', () => {
+        // If you want to control session expiry server-side, handle in view/middleware.
+      });
+    }
+  </script>
+
+</body>
+
+</html>

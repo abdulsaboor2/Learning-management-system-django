@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 Question Quiz</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+.question { display: none; margin-bottom: 20px; }
+.correct { color: green; font-weight: bold; }
+.incorrect { color: red; font-weight: bold; }
+.pass { color: green; font-size: 18px; font-weight: bold; }
+.fail { color: red; font-size: 18px; font-weight: bold; }
+button { margin-top: 20px; padding: 10px 20px; }
+</style>
+</head>
+<body>
+<h1>10 Question Quiz</h1>
+<form id="quizForm">
+
+<!-- Question 1 -->
+<div class="question" id="q1Box">
+<p>The following code div, img allows us to perform which operation?</p>
+<label><input type="radio" name="q1" value="7"> Selects all &lt;div&gt; elements and all &lt;img&gt; elements</label><br>
+<label><input type="radio" name="q1" value="8"> Selects all &lt;img&gt; elements inside &lt;div&gt; element</label><br>
+<label><input type="radio" name="q1" value="9"> Selects an element with a uniquely identifiable ID</label><br>
+<label><input type="radio" name="q1" value="6"> None of the above</label>
+<p class="feedback" id="f1"></p>
+<button type="button" onclick="nextQuestion(1)">Next</button>
+</div>
+
+<!-- Question 2 -->
+<div class="question" id="q2Box">
+<p>The following code div img allows us to perform which operation?</p>
+<label><input type="radio" name="q2" value="7"> Selects all &lt;div&gt; elements and all &lt;img&gt; elements</label><br>
+<label><input type="radio" name="q2" value="8"> Selects all &lt;img&gt; elements inside &lt;div&gt; element</label><br>
+<label><input type="radio" name="q2" value="9"> Selects an element with a uniquely identifiable ID</label><br>
+<label><input type="radio" name="q2" value="6"> None of the above</label><br>
+<p class="feedback" id="f2"></p>
+<button type="button" onclick="nextQuestion(2)">Next</button>
+</div>
+
+<!-- Question 3 -->
+<div class="question" id="q3Box">
+<p>Pseudo-classes are ideal for managing the ______ of an element.</p>
+<label><input type="radio" name="q3" value="7"> UI</label><br>
+<label><input type="radio" name="q3" value="8"> flow</label><br>
+<label><input type="radio" name="q3" value="9"> state</label><br>
+<label><input type="radio" name="q3" value="6"> selector</label><br>
+<p class="feedback" id="f3"></p>
+<button type="button" onclick="nextQuestion(3)">Next</button>
+</div>
+
+<!-- Question 4 -->
+<div class="question" id="q4Box">
+<p>Using the :disabled pseudo-class does not allow us to prevent the user from supplying data to an input field.</p>
+<label><input type="radio" name="q4" value="7"> True</label><br>
+<label><input type="radio" name="q4" value="8"> False</label><br>
+<p class="feedback" id="f4"></p>
+<button type="button" onclick="nextQuestion(4)">Next</button>
+</div>
+
+<!-- Question 5 -->
+<div class="question" id="q5Box">
+<p>When it comes to approaches to styling using CSS, it is best to opt which approach?</p>
+<label><input type="radio" name="q5" value="7"> Internal and inline</label><br>
+<label><input type="radio" name="q5" value="8"> Internal</label><br>
+<label><input type="radio" name="q5" value="9"> Inline</label><br>
+<label><input type="radio" name="q5" value="6"> External</label><br>
+<p class="feedback" id="f5"></p>
+<button type="button" onclick="nextQuestion(5)">Next</button>
+</div>
+
+<!-- Question 6 -->
+<div class="question" id="q6Box">
+<p>The &lt;link&gt; element provides us with the functionality to ______.</p>
+<label><input type="radio" name="q6" value="7"> link a CSS file to an HTML document</label><br>
+<label><input type="radio" name="q6" value="8"> link a text file to an HTML document</label><br>
+<label><input type="radio" name="q6" value="9"> link a database file to an HTML document</label><br>
+<label><input type="radio" name="q6" value="6"> link an audio file to an HTML document</label><br>
+<p class="feedback" id="f6"></p>
+<button type="button" onclick="nextQuestion(6)">Next</button>
+</div>
+
+<!-- Question 7 -->
+<div class="question" id="q7Box">
+<p>Which of the following styling approaches allows us to embed CSS code with any element available in our HTML document?</p>
+<label><input type="radio" name="q7" value="7"> Internal and inline</label><br>
+<label><input type="radio" name="q7" value="8"> Internal</label><br>
+<label><input type="radio" name="q7" value="9"> Inline</label><br>
+<label><input type="radio" name="q7" value="6"> External</label><br>
+<p class="feedback" id="f7"></p>
+<button type="button" onclick="nextQuestion(7)">Next</button>
+</div>
+
+<!-- Question 8 -->
+<div class="question" id="q8Box">
+<p>Scaling fonts using a relative approach enables the client to treat fonts in a more responsive manner.</p>
+<label><input type="radio" name="q8" value="7"> True</label><br>
+<label><input type="radio" name="q8" value="8"> False</label><br>
+<p class="feedback" id="f8"></p>
+<button type="button" onclick="nextQuestion(8)">Next</button>
+</div>
+
+<!-- Question 9 -->
+<div class="question" id="q9Box">
+<p>Which of the following are valid units of measure when setting font sizes?</p>
+<label><input type="radio" name="q9" value="7"> em</label><br>
+<label><input type="radio" name="q9" value="8"> px</label><br>
+<label><input type="radio" name="q9" value="9"> %</label><br>
+<label><input type="radio" name="q9" value="6"> All of the above</label><br>
+<p class="feedback" id="f9"></p>
+<button type="button" onclick="nextQuestion(9)">Next</button>
+</div> 
+
+<!-- Question 10 -->
+<div class="question" id="q10Box">
+<p>Using px as a unit of measure to set font sizes is an example of using a(n) _________ approach.</p>
+<label><input type="radio" name="q10" value="7"> relative</label><br>
+<label><input type="radio" name="q10" value="8"> absolute</label><br>
+<label><input type="radio" name="q10" value="9"> static</label><br>
+<label><input type="radio" name="q10" value="6"> variable</label><br>
+<p class="feedback" id="f10"></p>
+<button type="button" onclick="nextQuestion(10)">Next</button>
+</div>
+
+</form>
+
+<h2 id="score"></h2>
+<h2 id="result"></h2>
+
+<script>
+const answers = {
+q1: "7",
+q2: "8",
+q3: "9",
+q4: "8",
+q5: "6",
+q6: "7",
+q7: "6",
+q8: "7",
+q9: "6",
+q10: "8"
+};
+
+let score = 0;
+let total = Object.keys(answers).length;
+
+// Show first question
+document.getElementById("q1Box").style.display = "block";
+
+function nextQuestion(num) {
+  const feedback = document.getElementById("f" + num);
+  const selected = document.querySelector(`input[name="q${num}"]:checked`);
+
+  if (!selected) {
+    feedback.textContent = "No answer selected.";
+    feedback.className = "feedback incorrect";
+  } else if (selected.value === answers[`q${num}`]) {
+    feedback.textContent = "Correct!";
+    feedback.className = "feedback correct";
+    score++;
+  } else {
+    feedback.textContent = "Incorrect!";
+    feedback.className = "feedback incorrect";
+  }
+
+  // Hide current question after feedback delay, show next
+  setTimeout(() => {
+    document.getElementById(`q${num}Box`).style.display = "none";
+    if (num < total) {
+      document.getElementById(`q${num + 1}Box`).style.display = "block";
+    } else {
+      finishQuiz();
+    }
+  }, 1000);
+}
+
+function finishQuiz() {
+  const percentage = (score / total) * 100;
+  document.getElementById("score").textContent = `You scored ${score} out of ${total} (${percentage.toFixed(0)}%)`;
+
+  if (percentage >= 60) {
+    document.getElementById("result").textContent = "Congratulations! You Passed.";
+    document.getElementById("result").className = "pass";
+  } else {
+    document.getElementById("result").textContent = "Sorry, You Failed.";
+    document.getElementById("result").className = "fail";
+  }
+}
+</script>
+</body>
+</html>

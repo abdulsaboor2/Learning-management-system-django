@@ -1,0 +1,481 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Rabbani CiC | Accredited Online Courses with Mentor Support</title>
+  
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root{
+      --rcic-blue:#1e3a8a;
+      --rcic-blue-600:#2747a8;
+      --rcic-slate:#334155;
+      --rcic-ink:#0f172a;
+      --rcic-light:#f8fafc;
+    }
+    html,body{scroll-behavior:smooth}
+    body{
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--rcic-light);
+      color:#0b1426;
+    }
+
+    /* Navbar */
+    .navbar{
+      position:fixed; inset:0 0 auto 0; z-index:1030;
+      background:rgba(15,23,42,.65); backdrop-filter: blur(8px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .brand-title{
+      font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:600; color:#fff; margin:0;
+      letter-spacing:.3px; font-size:1.6rem;
+    }
+    .navbar .nav-link{ color:#e2e8f0 !important; font-weight:500 }
+    .navbar .nav-link:hover{ color:#fff !important; text-decoration:underline }
+
+    /* Hero */
+    .hero{
+      margin-top:65px;
+      min-height:72vh; display:grid; place-items:center; color:#fff;
+      background:linear-gradient(180deg, rgba(15,23,42,.78), rgba(15,23,42,.92)),
+                 url("{% static 'img/head11.jpg' %}") center/cover no-repeat;
+      text-align:center;
+    }
+    .hero h1{ font-size:clamp(2rem,5vw,3.5rem); letter-spacing:.3px }
+    .hero p{ max-width:780px; margin:0 auto }
+    .btn-primary-gradient{
+      background:linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600)); border:0; font-weight:600;
+      box-shadow:0 12px 28px rgba(30,58,138,.35);
+    }
+
+    /* Trust strip */
+    .trust-strip{
+      background:#fff; border-top:1px solid #e5e7eb; border-bottom:1px solid #e5e7eb;
+      color:#475569;
+    }
+
+    /* Split section */
+    .edu-section{ padding:70px 0 }
+    .edu-section h2{
+      font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:600; color:var(--rcic-ink);
+    }
+    .edu-img{
+      border-radius:14px; box-shadow:0 14px 36px rgba(0,0,0,.18); transition: transform .5s ease;
+    }
+    .edu-img:hover{ transform:scale(1.03) }
+
+    /* Courses */
+    .courses{ padding:70px 0; background:#fff }
+    .section-title{
+      font-size:clamp(1.6rem,3vw,2rem); font-weight:600; color:var(--rcic-ink); margin-bottom:26px;
+    }
+    .course-card{
+      border:0; border-radius:16px; overflow:hidden; height:100%;
+      box-shadow:0 8px 20px rgba(0,0,0,.08);
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .course-card:hover{ transform:translateY(-4px); box-shadow:0 14px 32px rgba(0,0,0,.12) }
+    .course-card .card-img-top{ height:190px; object-fit:cover }
+    .badge-dark{ background:var(--rcic-slate) }
+
+    /* Features */
+    .features{ padding:70px 0 }
+    .feature{ display:flex; gap:14px; align-items:flex-start; margin-bottom:26px }
+    .feature i{
+      font-size:1.75rem; width:44px; height:44px; display:grid; place-items:center;
+      border-radius:10px; background:#eef2ff; color:var(--rcic-blue);
+    }
+
+    /* Testimonials */
+    .testimonials{ padding:70px 0; background:#f2f5fb }
+    .quote{
+      background:#fff; border:1px solid #e5e7eb; border-radius:14px; padding:20px; height:100%;
+      box-shadow:0 8px 18px rgba(0,0,0,.08);
+    }
+    .quote p{ color:#334155 }
+
+    /* FAQ */
+    .faq{ padding:70px 0 }
+
+    /* Contact bubble */
+    .contact-wrap{ position:fixed; right:20px; bottom:20px; z-index:1030; display:flex; flex-direction:column; gap:10px; align-items:flex-end }
+    .contact-card{
+      width:320px; max-width:92vw; display:none; flex-direction:column; gap:10px;
+      background:#fff; border-radius:14px; padding:16px; border:1px solid #e5e7eb;
+      box-shadow:0 14px 36px rgba(0,0,0,.2);
+    }
+    .contact-card input,.contact-card textarea{ border-radius:10px }
+    .contact-btn{
+      border:0; color:#fff; font-weight:600; border-radius:9999px; padding:12px 16px; display:flex; align-items:center; gap:8px;
+      background:linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600));
+      box-shadow:0 12px 26px rgba(30,58,138,.35);
+    }
+
+    /* Footer */
+    footer{ background:#0f172a; color:#cbd5e1 }
+    footer h5{ color:#fff; font-weight:600 }
+    .footer-bottom{ border-top:1px solid rgba(255,255,255,.08); color:#94a3b8 }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'index' %}">
+        <img src="{% static 'img/aa.png' %}" alt="Rabbani CiC logo" width="36" height="36">
+        <span class="brand-title">Rabbani CiC</span>
+      </a>
+
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="{%url 'courses_list'%}">Courses</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">Why Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+          <li class="nav-item ms-lg-3">
+            <a class="btn btn-sm btn-light fw-semibold" href="#contact">Talk to an Advisor</a>
+          </li>
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-sm btn-primary btn-primary-gradient fw-semibold" href="{% url 'login' %}">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container py-5">
+      <h1 class="mb-3">Practical, accredited courses that move your career forward</h1>
+      <p class="lead mb-4">
+        Flexible online learning with mentor support and recognised certificates. Start a free lesson today—no credit card required.
+      </p>
+      <div class="d-flex justify-content-center gap-2">
+        
+        <a href="#courses" class="btn btn-outline-light btn-lg">Browse Courses</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Trust strip -->
+  <div class="trust-strip py-3">
+    <div class="container d-flex flex-wrap justify-content-center gap-3 small">
+      <span><i class="fa-solid fa-users me-1 text-primary"></i> Trusted by 2,500+ learners</span>
+      <span><i class="fa-solid fa-shield-check me-1 text-success"></i> CPD-accredited</span>
+      <span><i class="fa-solid fa-star me-1 text-warning"></i> 4.8/5 learner satisfaction</span>
+    </div>
+  </div>
+
+  <!-- Intro split -->
+  <section class="edu-section">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+          <h2 class="mb-2">Learn by doing, not just watching</h2>
+          <p class="mb-3 text-secondary">
+            Every Rabbani CiC course is built around real projects, weekly mentor feedback, and a flexible schedule you can pause anytime.
+          </p>
+          <ul class="list-unstyled text-secondary mb-4">
+            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Build portfolio projects you can show employers</li>
+            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> 1:1 mentor check-ins and community support</li>
+            <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Certificate issued on completion (CPD recognised)</li>
+          </ul>
+          <a href="#courses" class="btn btn-outline-dark fw-semibold">See Courses</a>
+        </div>
+        <div class="col-lg-6">
+          <img class="img-fluid edu-img" src="{% static 'img/potential.png' %}" alt="Learner growing potential" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses -->
+  <section id="courses" class="courses">
+    <div class="container">
+      <h3 class="section-title text-center">Our Courses</h3>
+      <div class="row g-4">
+        <!-- Web Dev -->
+        <div class="col-12 col-sm-6 col-lg-3">
+          <article class="card course-card h-100">
+            <img src="{% static 'img/web.jpg' %}" class="card-img-top" alt="Web Development" loading="lazy">
+            <div class="card-body d-flex flex-column">
+              <span class="badge text-bg-dark badge-dark mb-2">Beginner–Advanced</span>
+              <h5 class="card-title mb-2">Web Development</h5>
+              <p class="card-text text-secondary">Master HTML, CSS, JavaScript and React. Build and deploy 3 portfolio projects.</p>
+              <div class="mt-auto d-flex gap-2">
+                <a href="{% url 'enroll' 'web-development' %}" class="btn btn-primary btn-primary-gradient">Enroll</a>              </div>
+            </div>
+          </article>
+        </div>
+        <!-- PM -->
+        <div class="col-12 col-sm-6 col-lg-3">
+          <article class="card course-card h-100">
+            <img src="{% static 'img/project.jpg' %}" class="card-img-top" alt="Project Management" loading="lazy">
+            <div class="card-body d-flex flex-column">
+              <span class="badge text-bg-dark badge-dark mb-2">Professional</span>
+              <h5 class="card-title mb-2">Project Management</h5>
+              <p class="card-text text-secondary">Plan, lead and deliver using Agile & Waterfall. Includes Jira and real templates.</p>
+              <div class="mt-auto d-flex gap-2">
+                <a href="#" class="btn btn-primary btn-primary-gradient">Enroll</a>              </div>
+            </div>
+          </article>
+        </div>
+        <!-- Design -->
+        <div class="col-12 col-sm-6 col-lg-3">
+          <article class="card course-card h-100">
+            <img src="{% static 'img/graphic.jpg' %}" class="card-img-top" alt="Graphic Design" loading="lazy">
+            <div class="card-body d-flex flex-column">
+              <span class="badge text-bg-dark badge-dark mb-2">Creative</span>
+              <h5 class="card-title mb-2">Graphic Design</h5>
+              <p class="card-text text-secondary">Branding, typography, layouts. Build a brand kit and portfolio with Figma.</p>
+              <div class="mt-auto d-flex gap-2">
+                <a href="#" class="btn btn-primary btn-primary-gradient">Enroll</a>              </div>
+            </div>
+          </article>
+        </div>
+        <!-- SMM -->
+        <div class="col-12 col-sm-6 col-lg-3">
+          <article class="card course-card h-100">
+            <img src="{% static 'img/social.jpg' %}" class="card-img-top" alt="Social Media Marketing" loading="lazy">
+              <div class="card-body d-flex flex-column">
+                <span class="badge text-bg-dark badge-dark mb-2">Marketing</span>
+                <h5 class="card-title mb-2">Social Media Marketing</h5>
+                <p class="card-text text-secondary">Content strategy, paid ads, analytics. Launch a 4-week campaign with metrics.</p>
+                <div class="mt-auto d-flex gap-2">
+                  <a href="#" class="btn btn-primary btn-primary-gradient">Enroll</a>
+                </div>
+              </div>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a class="btn btn-link btn-link-gradient link" href="{%url 'courses_list'%}">View More</a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="features">
+    <div class="container">
+      <h3 class="section-title text-center mb-4">Why choose Rabbani CiC</h3>
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="feature"><i class="fa-solid fa-laptop"></i><div><h6 class="mb-1">100% Online & Flexible</h6><p class="text-secondary mb-0">Self-paced with optional live sessions.</p></div></div>
+          <div class="feature"><i class="fa-solid fa-book-open"></i><div><h6 class="mb-1">All Materials Included</h6><p class="text-secondary mb-0">Templates, checklists & resources.</p></div></div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature"><i class="fa-solid fa-circle-pause"></i><div><h6 class="mb-1">Pause Anytime</h6><p class="text-secondary mb-0">Your progress is saved.</p></div></div>
+          <div class="feature"><i class="fa-solid fa-certificate"></i><div><h6 class="mb-1">Recognised Certificates</h6><p class="text-secondary mb-0">Verifiable, shareable on LinkedIn.</p></div></div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature"><i class="fa-solid fa-headset"></i><div><h6 class="mb-1">Dedicated Support</h6><p class="text-secondary mb-0">Mentors reply within 24 hours.</p></div></div>
+          <div class="feature"><i class="fa-solid fa-users"></i><div><h6 class="mb-1">80+ Expert Tutors</h6><p class="text-secondary mb-0">Learn from practitioners.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="container">
+      <h3 class="section-title text-center">What our learners say</h3>
+      <div class="row g-4 mt-1">
+        <div class="col-md-4">
+          <div class="quote">
+            <p>“I went from zero to a junior web developer in 4 months. The projects and feedback were the difference.”</p>
+            <div class="d-flex align-items-center gap-2 mt-3">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTGsb4ZPFszPoDicoMnYfD3EEvz7obFYB20Q&s" class="rounded-circle" alt="Aisha avatar" width="40" height="40">
+              <div><strong>Aisha K.</strong><div class="small text-secondary">Web Dev Graduate</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="quote">
+            <p>“The PM course gave me practical tools—Jira, risk logs, stakeholder comms—that I used at work immediately.”</p>
+            <div class="d-flex align-items-center gap-2 mt-3">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSivbANFrymCxpFyqVyLUJYd3YkMgXX-dmulQ&s" class="rounded-circle" alt="Omar avatar" width="40" height="40">
+              <div><strong>Omar S.</strong><div class="small text-secondary">Project Manager</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="quote">
+            <p>“Flexible schedule + mentor feedback kept me accountable. I built a portfolio I’m proud to share.”</p>
+            <div class="d-flex align-items-center gap-2 mt-3">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA-GQVg3A3aF598hl18_6VQkU2CFNb7QLMBw&s" class="rounded-circle" alt="Sara avatar" width="40" height="40">
+              <div><strong>Sara M.</strong><div class="small text-secondary">Design Graduate</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq">
+    <div class="container">
+      <h3 class="section-title text-center">Frequently asked questions</h3>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="accordion" id="faqAcc">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="q1">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="true" aria-controls="a1">
+                  How long does each course take?
+                </button>
+              </h2>
+              <div id="a1" class="accordion-collapse collapse show" aria-labelledby="q1" data-bs-parent="#faqAcc">
+                <div class="accordion-body">Most courses take 4–12 weeks at ~5–7 hrs/week, self-paced.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="q2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false" aria-controls="a2">
+                  Are the certificates recognised?
+                </button>
+              </h2>
+              <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#faqAcc">
+                <div class="accordion-body">Yes, CPD-accredited and verifiable. You can add them to LinkedIn.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="q3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">
+                  Can I pause or switch courses?
+                </button>
+              </h2>
+              <div id="a3" class="accordion-collapse collapse" aria-labelledby="q3" data-bs-parent="#faqAcc">
+                <div class="accordion-body">Yes—pause anytime. Switching is allowed within 14 days of enrollment.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="q4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a4" aria-expanded="false" aria-controls="a4">
+                  Do I get career support?
+                </button>
+              </h2>
+              <div id="a4" class="accordion-collapse collapse" aria-labelledby="q4" data-bs-parent="#faqAcc">
+                <div class="accordion-body">Yes—portfolio review, CV templates, and interview preparation are included.</div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="q5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a5" aria-expanded="false" aria-controls="a5">
+                  Refund policy
+                </button>
+              </h2>
+              <div id="a5" class="accordion-collapse collapse" aria-labelledby="q5" data-bs-parent="#faqAcc">
+                <div class="accordion-body">7-day money-back guarantee if you’re not satisfied.</div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-4">
+            <a href="#contact" class="btn btn-primary btn-primary-gradient">Still have questions? Talk to us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="pt-5">
+    <div class="container pb-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <h5>Skills</h5>
+          <div class="row">
+            <div class="col-6">
+              <ul class="list-unstyled small">
+                <li>Web Development</li><li>Project Management</li><li>Graphic Design</li><li>Marketing</li>
+              </ul>
+            </div>
+            <div class="col-6">
+              <ul class="list-unstyled small">
+                <li>UI/UX Basics</li><li>Data Literacy</li><li>Presentation</li><li>Career Skills</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <h5>Rabbani CiC</h5>
+          <p class="small">
+            Rabbani CiC provides practical, accredited online courses with mentor support.
+            Learn flexibly, build real projects, and earn recognised certificates.
+          </p>
+          <div class="d-flex gap-3 fs-5">
+            <a class="text-reset" href="#"><i class="fab fa-linkedin"></i></a>
+            <a class="text-reset" href="#"><i class="fab fa-x-twitter"></i></a>
+            <a class="text-reset" href="#"><i class="fab fa-facebook-f"></i></a>
+            <a class="text-reset" href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <h5>Search Courses</h5>
+          <form class="d-grid gap-2">
+            <input type="text" class="form-control form-control-sm" placeholder="Search for courses..." />
+            <button class="btn btn-sm btn-primary btn-primary-gradient fw-semibold" type="button">Search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom py-3 text-center small">
+      Copyright © <span id="year"></span> <a href="/" class="text-decoration-none text-white">Rabbani CiC</a>. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Contact bubble -->
+  <div class="contact-wrap" id="contact">
+    <form class="contact-card" id="contactForm" aria-label="Get free course advice"
+          method="post" action="{% url 'contact_submit' %}">
+      {% csrf_token %}
+      <div class="d-flex align-items-center gap-2 mb-1">
+        <i class="fa-solid fa-graduation-cap text-primary"></i>
+        <strong>Get free course advice</strong>
+      </div>
+      <input type="text" class="form-control" name="name" placeholder="Full Name" required>
+      <input type="email" class="form-control" name="email" placeholder="Email" required>
+      <textarea class="form-control" name="message" placeholder="What do you want to achieve?" rows="3" required></textarea>
+      <button type="submit" class="btn btn-primary btn-primary-gradient fw-semibold">Send</button>
+    </form>
+    {% if messages %}
+    <div class="container mt-3">
+      {% for m in messages %}
+        <div class="alert alert-{{ m.tags }} alert-dismissible fade show" role="alert">
+          {{ m }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+{% endif %}
+
+    <button class="contact-btn" id="toggleContact">
+      <i class="fa-solid fa-message"></i> Contact Us
+    </button>
+  </div>
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Contact toggle
+    const toggle = document.getElementById('toggleContact');
+    const card = document.getElementById('contactForm');
+    toggle.addEventListener('click', () => {
+      const visible = getComputedStyle(card).display !== 'none';
+      card.style.display = visible ? 'none' : 'flex';
+    });
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,513 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>10 Question Quiz • Rabbani CiC</title>
+<style>
+  :root{
+    --rcic-blue:#1e3a8a;
+    --rcic-blue-600:#2747a8;
+    --ok:#16a34a;
+    --bad:#dc2626;
+    --ink:#0f172a;
+    --slate:#334155;
+    --soft:#f8fafc;
+    --line:#e5e7eb;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    margin: 0; background: #f6f7fb; color: var(--ink);
+  }
+  .wrap{
+    max-width: 900px; margin: 32px auto; padding: 16px;
+  }
+  .card{
+    background: #fff; border:1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(0,0,0,.06);
+    overflow: hidden;
+  }
+  header.hero{
+    padding: 18px 20px; background: linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600)); color:#fff;
+  }
+  header.hero h1{ margin:0; font-size: clamp(1.1rem, 2.6vw, 1.6rem); }
+  .body{ padding: 18px 20px; }
+
+  /* Progress */
+  .progressbar{ display:flex; align-items:center; gap: 10px; margin: 10px 0 18px; }
+  .progressline{ flex:1; height:10px; background:#e8ecf3; border-radius:999px; overflow:hidden; }
+  .progressline > span{
+    display:block; height:100%; width:0%; background: linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600));
+    transition: width .25s ease-in-out;
+  }
+  .counter{ font-weight:600; color:#475569; min-width: 130px; text-align:right; }
+
+  /* Question */
+  .question{ display:none; margin-bottom: 14px; }
+  .question.active{ display:block }
+  .qtext{ font-size:1.02rem; margin-bottom:8px; }
+  fieldset{ border:0; padding:0; margin:0 0 6px; }
+  .option{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:10px 12px; border:1px solid var(--line); border-radius:10px; margin:8px 0;
+    background:#fff; cursor:pointer; transition:border-color .15s, box-shadow .15s, background .15s;
+  }
+  .option:hover{ border-color:#cbd5e1; }
+  .option input{ margin-top:3px; }
+  .option.correct{ border-color: #22c55e80; background:#f0fff5; }
+  .option.incorrect{ border-color: #ef444480; background:#fff1f1; }
+  .option.locked{ opacity:.9; }
+  .feedback{ min-height: 20px; font-weight:600; }
+  .feedback.correct{ color: var(--ok); }
+  .feedback.incorrect{ color: var(--bad); }
+
+  /* Nav */
+  .nav{
+    display:flex; gap:10px; justify-content:space-between; align-items:center; margin-top:10px;
+  }
+  .nav-left, .nav-right{ display:flex; gap:10px; align-items:center; }
+  button{
+    padding:10px 16px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer;
+    font-weight:600;
+  }
+  .btn-primary{
+    background: linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600)); color:#fff; border:0;
+    box-shadow:0 10px 22px rgba(30,58,138,.25);
+  }
+  .btn-primary:disabled{ opacity:.6; cursor:not-allowed; box-shadow:none; }
+  .pill{ font-size:.85rem; padding:6px 10px; border-radius:999px; background:#eef2ff; color:#1f2a5a; border:0; }
+
+  /* Result */
+  .result{ display:none; text-align:center; padding: 18px 10px 6px; }
+  .score{ font-size:1.3rem; margin:6px 0; }
+  .pass{ color: var(--ok); font-weight:800; }
+  .fail{ color: var(--bad); font-weight:800; }
+
+  /* Review table */
+  table{ width:100%; border-collapse: collapse; margin-top: 12px; font-size:.95rem; }
+  th, td{ border:1px solid var(--line); padding:10px; text-align:left; vertical-align: top; }
+  th{ background:#f8fafc; }
+  .good{ color:var(--ok); font-weight:700; }
+  .bad{ color:var(--bad); font-weight:700; }
+
+  @media (max-width:640px){
+    .counter{ min-width:auto; }
+    .nav{ flex-direction:column; align-items:stretch }
+    .nav-left, .nav-right{ justify-content:space-between }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header class="hero">
+        <h1>10 Question Quiz</h1>
+      </header>
+
+      <div class="body" id="quizRoot" aria-live="polite">
+        <!-- Progress -->
+        <div class="progressbar" aria-hidden="true">
+          <div class="progressline"><span id="bar"></span></div>
+          <div class="counter" id="counter">Q1 / 10</div>
+        </div>
+
+        <form id="quizForm" novalidate>
+          <!-- Q1 -->
+          <section class="question active" id="q1Box" data-q="1">
+            <p class="qtext">The internet is a result of the evolution of ________.</p>
+            <fieldset>
+              <label class="option"><input type="radio" name="q1" value="7"> Cloud Computing</label>
+              <label class="option"><input type="radio" name="q1" value="8"> Distributed Computing</label>
+              <label class="option"><input type="radio" name="q1" value="9"> ARPANET</label>
+              <label class="option"><input type="radio" name="q1" value="6"> Modern Networks</label>
+            </fieldset>
+            <div class="feedback" id="f1" aria-live="polite"></div>
+          </section>
+
+          <!-- Q2 -->
+          <section class="question" id="q2Box" data-q="2">
+            <p class="qtext">Which of the following is true for packet switched networks?</p>
+            <fieldset>
+              <label class="option"><input type="radio" name="q2" value="7"> Files are sent directly from one node to the receiver.</label>
+              <label class="option"><input type="radio" name="q2" value="8"> Files are massive and can't be broken down.</label>
+              <label class="option"><input type="radio" name="q2" value="9"> Files are broken down into smaller packages and distributed over a network until it reaches the receiver.</label>
+              <label class="option"><input type="radio" name="q2" value="6"> None of the above</label>
+            </fieldset>
+            <div class="feedback" id="f2" aria-live="polite"></div>
+          </section>
+
+          <!-- Q3 -->
+          <section class="question" id="q3Box" data-q="3">
+            <p class="qtext">A local area network (LAN) is ideal for ________.</p>
+            <fieldset>
+              <label class="option"><input type="radio" name="q3" value="7"> small office spaces</label>
+              <label class="option"><input type="radio" name="q3" value="8"> enterprise software that spans across various geographical locations.</label>
+              <label class="option"><input type="radio" name="q3" value="9"> an organisation with a global presence.</label>
+              <label class="option"><input type="radio" name="q3" value="6"> hosting multiple LANs</label>
+            </fieldset>
+            <div class="feedback" id="f3" aria-live="polite"></div>
+          </section>
+
+          <!-- Q4 -->
+          <section class="question" id="q4Box" data-q="4">
+            <p class="qtext">An organisation with a global presence using enterprise-scale software should consider which network type?</p>
+            <fieldset>
+              <label class="option"><input type="radio" name="q4" value="7"> Local Area Network (LAN)</label>
+              <label class="option"><input type="radio" name="q4" value="8"> Wide Area Network (WAN)</label>
+              <label class="option"><input type="radio" name="q4" value="9"> Private Area Network (PAN)</label>
+              <label class="option"><input type="radio" name="q4" value="6"> None of the above</label>
+            </fieldset>
+            <div class="feedback" id="f4" aria-live="polite"></div>
+          </section>
+
+          <!-- Q5 -->
+          <section class="question" id="q5Box" data-q="5">
+            <p class="qtext">The use of a private network is often a lot more affordable given the low cost in infrastructure when compared to a public network.</p>
+            <fieldset>
+              <label class="option"><input type="radio" name="q5" value="7"> True</label>
+              <label class="option"><input type="radio" name="q5" value="8"> False</label>
+            </fieldset>
+            <div class="feedback" id="f5" aria-live="polite"></div>
+          </section>
+
+          <!-- Q6 -->
+          <section class="question" id="q6Box" data-q="6">
+            <p class="qtext">Which of the following is an example of a client in the client/server architecture?</p>
+            <fieldset>
+              <label class="option"><input type="radio" name="q6" value="7"> A user of a computer system.</label>
+              <label class="option"><input type="radio" name="q6" value="8"> An individual who purchases a web server.</label>
+              <label class="option"><input type="radio" name="q6" value="9"> PHP</label>
+              <label class="option"><input type="radio" name="q6" value="6"> Google Chrome</label>
+            </fieldset>
+            <div class="feedback" id="f6" aria-live="polite"></div>
+          </section>
+
+          <!-- Q7 -->
+          <section class="question" id="q7Box" data-q="7">
+            <p class="qtext">In a three-tier client/server architecture, the client will often request ________ from the web server.</p>
+            <fieldset>
+              <label class="option"><input type="radio" name="q7" value="7"> only CSS files</label>
+              <label class="option"><input type="radio" name="q7" value="8"> only HTML files</label>
+              <label class="option"><input type="radio" name="q7" value="9"> only JavaScript files</label>
+              <label class="option"><input type="radio" name="q7" value="6"> data from a database</label>
+            </fieldset>
+            <div class="feedback" id="f7" aria-live="polite"></div>
+          </section>
+
+          <!-- Q8 -->
+          <section class="question" id="q8Box" data-q="8">
+            <p class="qtext">Client-side scripts are typically run by the ________.</p>
+            <fieldset>
+              <label class="option"><input type="radio" name="q8" value="7"> Web Server</label>
+              <label class="option"><input type="radio" name="q8" value="8"> User</label>
+              <label class="option"><input type="radio" name="q8" value="9"> Browser</label>
+              <label class="option"><input type="radio" name="q8" value="6"> Database</label>
+            </fieldset>
+            <div class="feedback" id="f8" aria-live="polite"></div>
+          </section>
+
+          <!-- Q9 -->
+          <section class="question" id="q9Box" data-q="9">
+            <p class="qtext">Which of the following is an example of a wide area network (WAN)?</p>
+            <fieldset>
+              <label class="option"><input type="radio" name="q9" value="7"> A network of devices within ~10 meters (e.g., Bluetooth).</label>
+              <label class="option"><input type="radio" name="q9" value="8"> A wired network within an office building.</label>
+              <label class="option"><input type="radio" name="q9" value="9"> A home Wi-Fi network for one house.</label>
+              <label class="option"><input type="radio" name="q9" value="6"> The internet</label>
+            </fieldset>
+            <div class="feedback" id="f9" aria-live="polite"></div>
+          </section>
+
+          <!-- Q10 -->
+          <section class="question" id="q10Box" data-q="10">
+            <p class="qtext">Server-side scripts are typically run by the ________.</p>
+            <fieldset>
+              <label class="option"><input type="radio" name="q10" value="7"> Back-end</label>
+              <label class="option"><input type="radio" name="q10" value="8"> User</label>
+              <label class="option"><input type="radio" name="q10" value="9"> Client</label>
+              <label class="option"><input type="radio" name="q10" value="6"> Database</label>
+            </fieldset>
+            <div class="feedback" id="f10" aria-live="polite"></div>
+          </section>
+        </form>
+
+        <!-- Nav -->
+        <div class="nav">
+          <div class="nav-left">
+            <button type="button" id="prevBtn" class="pill" disabled>⟵ Previous</button>
+          </div>
+          <div class="nav-right">
+            <button type="button" id="nextBtn" class="btn-primary" disabled>Next ⟶</button>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="result" id="resultBox">
+          <p class="score" id="scoreText"></p>
+          <p id="passFail"></p>
+          <div id="review"></div>
+          <div style="margin-top:12px;">
+            <button type="button" class="pill" id="restartBtn">Restart Quiz</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Correct answers (keep your mapping)
+  const answers = {
+    q1:"9", q2:"9", q3:"7", q4:"8", q5:"8",
+    q6:"6", q7:"6", q8:"9", q9:"6", q10:"7"
+  };
+
+  const total = Object.keys(answers).length;
+  let current = 1;
+  let score = 0;
+  const selections = {};    // { q1: "value", ... }
+  const correctness = {};   // { q1: true/false, ... }
+
+  // DOM refs
+  const bar = document.getElementById('bar');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const resultBox = document.getElementById('resultBox');
+  const scoreText = document.getElementById('scoreText');
+  const passFail = document.getElementById('passFail');
+  const review = document.getElementById('review');
+  const restartBtn = document.getElementById('restartBtn');
+
+  // Init
+  updateUI();
+  wireOptions();
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){
+      if(nextBtn && !nextBtn.disabled){
+        e.preventDefault();
+        handleNext();
+      }
+    }
+  });
+
+  prevBtn.addEventListener('click', handlePrev);
+  nextBtn.addEventListener('click', handleNext);
+  restartBtn.addEventListener('click', restart);
+
+  function qBox(n){ return document.getElementById(`q${n}Box`); }
+  function feedbackEl(n){ return document.getElementById(`f${n}`); }
+
+  function updateProgressVisual(){
+    const percent = ((current-1)/total)*100;
+    bar.style.width = `${percent}%`;
+    counter.textContent = `Q${current} / ${total}`;
+    prevBtn.disabled = current === 1;
+  }
+
+  function showQuestion(n){
+    for(let i=1;i<=total;i++){ qBox(i).classList.remove('active'); }
+    qBox(n).classList.add('active');
+    restoreState(n);               // re-apply lock & feedback if already answered
+    updateProgressVisual();
+    nextBtn.textContent = (n === total) ? 'Finish ⟶' : 'Next ⟶';
+    nextBtn.disabled = !selections[`q${n}`];
+  }
+
+  function updateUI(){ showQuestion(current); }
+
+  function wireOptions(){
+    for(let i=1;i<=total;i++){
+      const box = qBox(i);
+      box.querySelectorAll('input[type="radio"]').forEach(r=>{
+        r.addEventListener('change', ()=>{
+          // record selection
+          selections[`q${i}`] = r.value;
+          const isCorrect = r.value === answers[`q${i}`];
+          correctness[`q${i}`] = isCorrect;
+
+          // paint current selection
+          paintOptions(i);
+          giveFeedback(i, isCorrect);
+
+          // LOCK this question so it can't be changed until restart
+          lockQuestion(i);
+
+          nextBtn.disabled = false;
+        });
+
+        // Improve radio keyboard nav (only matters before locked)
+        r.addEventListener('keydown', (e)=>{
+          if(r.disabled) return;
+          if(e.key === 'ArrowDown' || e.key === 'ArrowRight'){
+            e.preventDefault();
+            r.closest('label').nextElementSibling?.querySelector('input')?.focus();
+          }
+          if(e.key === 'ArrowUp' || e.key === 'ArrowLeft'){
+            e.preventDefault();
+            r.closest('label').previousElementSibling?.querySelector('input')?.focus();
+          }
+        });
+      });
+    }
+  }
+
+  function paintOptions(qNum){
+    const box = qBox(qNum);
+    const correctVal = answers[`q${qNum}`];
+    const selectedVal = selections[`q${qNum}`];
+
+    box.querySelectorAll('.option').forEach(lbl=>{
+      const input = lbl.querySelector('input');
+      lbl.classList.remove('correct','incorrect');
+      if(input.value === selectedVal){
+        lbl.classList.add(input.value === correctVal ? 'correct' : 'incorrect');
+      }
+    });
+  }
+
+  function giveFeedback(qNum, isCorrect){
+    const f = feedbackEl(qNum);
+    f.textContent = isCorrect ? 'Correct!' : 'Incorrect!';
+    f.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+  }
+
+  // Disable all radios for a question (lock after answer)
+  function lockQuestion(qNum){
+    const box = qBox(qNum);
+    box.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+    box.querySelectorAll('.option').forEach(lbl => lbl.classList.add('locked'));
+  }
+
+  // Re-apply state (including locks) when navigating back
+  function restoreState(qNum){
+    const box = qBox(qNum);
+    const sel = selections[`q${qNum}`];
+
+    // Reset UI
+    box.querySelectorAll('.option').forEach(lbl => lbl.classList.remove('correct','incorrect','locked'));
+    box.querySelectorAll('input[type="radio"]').forEach(r => {
+      r.checked = false;
+      r.disabled = false;
+    });
+    const f = feedbackEl(qNum);
+    f.textContent = '';
+    f.className = 'feedback';
+
+    // If already answered earlier, repaint + lock
+    if(sel){
+      box.querySelectorAll('input[type="radio"]').forEach(r => { r.checked = (r.value === sel); });
+      paintOptions(qNum);
+      giveFeedback(qNum, sel === answers[`q${qNum}`]);
+      lockQuestion(qNum);
+    }
+  }
+
+  function handlePrev(){ if(current > 1){ current--; showQuestion(current); } }
+
+  function handleNext(){
+    if(!selections[`q${current}`]) return; // guard
+    if(current < total){
+      current++;
+      showQuestion(current);
+    }else{
+      finishQuiz();
+    }
+  }
+
+  function getCookie(name){
+    const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return m ? m.pop() : '';
+  }
+
+  function finishQuiz(){
+    // Compute score from correctness
+    score = Object.values(correctness).filter(Boolean).length;
+
+    // UI changes
+    document.getElementById('quizForm').style.display = 'none';
+    document.querySelector('.nav').style.display = 'none';
+    document.querySelector('.progressbar').style.visibility = 'hidden';
+
+    const pct = Math.round((score/total)*100);
+    scoreText.textContent = `You scored ${score} out of ${total} (${pct}%)`;
+    passFail.textContent = (pct >= 60) ? 'Congratulations! You Passed.' : 'Sorry, You Failed.';
+    passFail.className = (pct >= 60) ? 'pass' : 'fail';
+
+
+    const canPost = {{ can_post_results|yesno:"true,false" }};
+    if (canPost) {
+      const apiUrl = "{{ api_url|escapejs }}";
+      const form = new URLSearchParams();
+      form.set("score", String(pct));
+
+      // Optional: also send the chosen labels for later analytics/reporting
+      // Object.keys(selections).forEach(q => form.set(`label_${q}`, labelFor(q, selections[q])));
+
+      fetch(apiUrl, {
+        method: "POST",
+        headers: { "X-CSRFToken": getCookie("csrftoken") },
+        body: form
+      }).catch(()=>{}); // fire-and-forget for now
+    }
+
+
+
+    // Build review table
+    const rows = [];
+    for(let i=1;i<=total;i++){
+      const qName = `q${i}`;
+      const userVal = selections[qName] ?? '—';
+      const correctVal = answers[qName];
+      rows.push(`
+        <tr>
+          <td>Q${i}</td>
+          <td class="${userVal===correctVal ? 'good':'bad'}">${labelFor(qName, userVal)}</td>
+          <td>${labelFor(qName, correctVal)}</td>
+        </tr>
+      `);
+    }
+    review.innerHTML = `
+      <table aria-label="Answer review">
+        <thead><tr><th>Question</th><th>Your Answer</th><th>Correct Answer</th></tr></thead>
+        <tbody>${rows.join('')}</tbody>
+      </table>
+    `;
+    resultBox.style.display = 'block';
+  }
+
+  function labelFor(qName, val){
+    if(!val) return '—';
+    const input = document.querySelector(`input[name="${qName}"][value="${val}"]`);
+    if(!input) return '—';
+    return input.parentElement.textContent.trim();
+  }
+
+  function restart(){
+    // reset state
+    for(let k in selections) delete selections[k];
+    for(let k in correctness) delete correctness[k];
+    score = 0; current = 1;
+
+    // reset UI
+    document.getElementById('quizForm').style.display = '';
+    document.querySelector('.nav').style.display = '';
+    document.querySelector('.progressbar').style.visibility = 'visible';
+    resultBox.style.display = 'none';
+
+    // unlock everything
+    for(let i=1;i<=total;i++){
+      const box = qBox(i);
+      box.querySelectorAll('input[type="radio"]').forEach(r=> { r.checked = false; r.disabled = false; });
+      box.querySelectorAll('.option').forEach(lbl=> lbl.classList.remove('correct','incorrect','locked'));
+      const f = feedbackEl(i); f.textContent=''; f.className='feedback';
+    }
+    nextBtn.disabled = true;
+    updateUI();
+  }
+</script>
+</body>
+</html>

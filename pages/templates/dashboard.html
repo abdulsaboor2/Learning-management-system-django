@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Rabbani CiC • LMS</title>
+<style>
+:root{ --ink:#0f172a; --muted:#475569; --line:#e2e8f0; --bg:#f6f7fb; --card:#ffffff; --brand:#1e3a8a; --brand-2:#2747a8; --accent:#22c55e; --warn:#f59e0b; --rcic-blue:#1e3a8a; --rcic-blue-600:#2747a8; }
+[data-theme="dark"]{ --ink:#e2e8f0; --muted:#94a3b8; --line:#263143; --bg:#0b1324; --card:#111a2c }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{ margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--ink); display:flex; min-height:100vh }
+  .side-toggle{
+    display:none; position:fixed; top:10px; left:10px; z-index:1200;
+    background:linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600));
+    color:#fff; border:0; border-radius:10px; padding:10px 12px;
+    box-shadow:0 10px 24px rgba(30,58,138,.35);
+  }
+  .sidebar{
+    width:260px; background:#0f172a; color:#e2e8f0; padding:16px 14px;
+    position:sticky; top:0; height:100vh; box-shadow:0 0 24px rgba(0,0,0,.18);
+  }
+  .brand-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px }
+  .brand-left{ display:flex; align-items:center; gap:10px }
+  .brand-title{ font-weight:700; letter-spacing:.3px }
+  .brand-btn{
+    display:inline-grid; place-items:center; width:36px; height:36px; border-radius:10px;
+    border:1px solid #223052; background:#0b1223; color:#e2e8f0;
+  }
+  .brand-btn:hover{ background:rgba(255,255,255,.08) }
+  .side-search{ margin:8px 0 12px }
+  .side-search input{
+    width:100%; padding:10px 12px; border:1px solid #223052; border-radius:10px;
+    background:#0b1223; color:#e2e8f0
+  }
+  .snav{ list-style:none; padding:0; margin:0 }
+  .snav li{ margin:2px 0 }
+  .snav .sep{ height:10px }
+  .snav a{
+    display:flex; align-items:center; gap:10px; color:#e2e8f0; text-decoration:none;
+    padding:10px 12px; border-radius:10px; border:1px solid transparent;
+  }
+  .snav a:hover, .snav a:focus{ background:rgba(255,255,255,.08); outline:none }
+  .snav a.active{ background:rgba(255,255,255,.12); border-color:#223052 }
+  .snav .badge{
+    margin-left:auto; font-size:.76rem; padding:2px 8px; border-radius:999px;
+    background:#122044; color:#dbeafe; border:1px solid #1f2e57
+  }
+  .sidebar.closed{ transform:translateX(-100%) }
+  .main{ flex:1; padding:18px }
+  .topbar{ display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:18px }
+  .top-left{ display:flex; gap:10px; align-items:center; flex-wrap:wrap }
+  .title{ font-size:1.25rem; font-weight:700; letter-spacing:.2px }
+  .search-wrap{ display:flex; gap:8px; align-items:center }
+  .search-wrap input{ padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:var(--card); color:var(--ink); width:260px }
+  .filters{ display:flex; gap:8px; flex-wrap:wrap }
+  .select, .toggle{ padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:var(--card); color:var(--ink) }
+  .toggle{ cursor:pointer } .toggle[aria-pressed="true"]{ background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#fff; border:0 }
+  .courses{ display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:16px }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,.06); transition:transform .18s ease, box-shadow .18s ease }
+  .card:hover{ transform:translateY(-3px); box-shadow:0 16px 36px rgba(0,0,0,.12) }
+  .card h3{ margin:0 0 4px; font-size:1.02rem }
+  .meta{ font-size:.85rem; color:var(--muted); margin-bottom:10px; display:flex; gap:8px; flex-wrap:wrap }
+  .meta .chip{ padding:3px 8px; border-radius:999px; background:#eef2ff; color:#1e2a6b; border:1px solid #dbe4ff }
+  [data-theme="dark"] .meta .chip{ background:#0e1a3a; color:#c7d2fe; border-color:#1f2a57 }
+  .desc{ font-size:.9rem; color:var(--muted); margin-bottom:10px }
+  .progress{ height:10px; background:#eaeef7; border-radius:999px; overflow:hidden; margin-bottom:10px; position:relative }
+  .bar{ height:100%; width:0; background: linear-gradient(135deg,var(--brand),var(--brand-2)); transition:width .3s }
+  .ptext{ font-size:.85rem; color:var(--muted); margin-bottom:8px }
+  .actions{ display:flex; gap:8px; align-items:center; justify-content:space-between }
+  .btn{ padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--ink); cursor:pointer; font-weight:600 }
+  .btn.primary{ background: linear-gradient(135deg,var(--brand),var(--brand-2)); color:#fff; border:0 }
+  .btn.ghost{ background:transparent }
+  .pill{ font-size:.78rem; padding:4px 8px; border-radius:999px }
+  .pill.green{ background:#eaffef; color:#065f46; border:1px solid #bbf7d0 }
+  .pill.gold{ background:#fff7e6; color:#8a5800; border:1px solid #fde68a }
+  [data-theme="dark"] .pill.green{ background:#082513; color:#c1f4d3; border-color:#0e3a22 }
+  [data-theme="dark"] .pill.gold{ background:#2b210c; color:#fde68a; border-color:#473910 }
+  .empty{ text-align:center; color:var(--muted); border:1px dashed var(--line); border-radius:14px; padding:24px }
+  :is(a,button,input,select).focus-visible, :is(a,button,input,select):focus{ outline:2px solid #60a5fa; outline-offset:2px }
+  @media (max-width: 992px){
+  .side-toggle{ display:block }
+  .sidebar{ position:fixed; left:0; top:0; bottom:0; transform:translateX(-100%); transition:transform .25s ease-in-out; z-index:1100 }
+  .sidebar.open{ transform:translateX(0) }
+}
+</style>
+</head>
+<body data-theme="light">
+  <!-- MOBILE TOGGLE (inline, no component) -->
+<button class="side-toggle" id="sideToggle" aria-controls="sidebar" aria-expanded="false">☰ Menu</button>
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="sidebar" role="navigation" aria-label="Main">
+    <!-- Brand header -->
+    <div class="brand brand-header">
+      <div class="brand-left">
+        <img src="{% static 'img/aa.png' %}" alt="Rabbani CiC logo" width="28" height="28" />
+        <span class="brand-title">Rabbani CiC</span>
+      </div>
+
+      {% if user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}" class="brand-actions">
+          {% csrf_token %}
+          <button type="submit" class="brand-btn" title="Logout" aria-label="Logout">🚪</button>
+        </form>
+      {% else %}
+        <a class="brand-btn" href="{% url '_view' %}" title="Login" aria-label="Login">↪</a>
+      {% endif %}
+    </div>
+
+    <!-- Quick search (filters the menu items) -->
+    <div class="side-search">
+      <input id="sideSearch" type="search" placeholder="Search menu…" aria-label="Search menu">
+    </div>
+
+    {% url 'dashboard' as dashboard_url %}
+    {% url 'courses_list' as courses_url %}
+    {% url 'settings' as settings_url %}
+
+    <ul class="snav" id="sideNav">
+      <li>
+        <a class="{% if request.path == dashboard_url %}active{% endif %}" href="{{ dashboard_url }}">
+          <span>🏠</span> <span class="label">Dashboard</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="{% if request.path == courses_url %}active{% endif %}" href="{{ courses_url }}">
+          <span>📚</span> <span class="label">Browse Courses</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="{{ dashboard_url }}#my-courses" class="{% if 'my-courses' in request.get_full_path %}active{% endif %}">
+          <span>🎓</span> <span class="label">My Courses</span>
+          <span class="badge" id="badgeEnroll">{{ enrolled_count|default:0 }}</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#">
+          <span>💬</span> <span class="label">Messages</span>
+          <span class="badge" id="badgeMsg">{{ unread_messages_count|default:0 }}</span>
+        </a>
+      </li>
+
+      <li class="sep"></li>
+
+      <li>
+        <a class="{% if request.path == settings_url %}active{% endif %}" href="{{ settings_url }}">
+          <span>⚙️</span> <span class="label">Settings</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="topbar">
+      <div class="top-left">
+        <div class="title">Welcome, {{ request.user.first_name|default:request.user.username }}</div>
+
+        <div class="search-wrap">
+          <input id="search" type="search" placeholder="Search courses..." aria-label="Search courses">
+        </div>
+
+        <div class="filters">
+          <select id="filterCategory" class="select" aria-label="Filter by category">
+            <option value="">All categories</option>
+            <option value="Web">Web</option>
+            <option value="Data">Data</option>
+            <option value="Design">Design</option>
+            <option value="Security">Security</option>
+            <option value="General">General</option>
+          </select>
+          <select id="filterStatus" class="select" aria-label="Filter by status">
+            <option value="">All status</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Not Started">Not Started</option>
+            <option value="Completed">Completed</option>
+          </select>
+          <button id="themeBtn" class="toggle" aria-pressed="false" title="Toggle theme">🌙 Dark</button>
+        </div>
+      </div>
+    </div>
+
+    <section id="courseGrid" class="courses" aria-live="polite"></section>
+    <div id="emptyState" class="empty" style="display:none">No courses match your filters.</div>
+  </main>
+
+<script>window.__COURSES__ = {{ courses_json|safe }};</script>
+
+<script>
+  // Pull courses from server JSON
+  // const courses = JSON.parse(document.getElementById('rcic-courses').textContent || '[]');
+
+  const courses = window.__COURSES__ || [];
+
+  // --- State ---
+  const state = { search:'', category:'', status:'', theme: localStorage.getItem('rcic:theme') || 'light' };
+
+  // --- DOM refs ---
+  const grid = document.getElementById('courseGrid');
+  const emptyState = document.getElementById('emptyState');
+  const search = document.getElementById('search');
+  const sideSearch = document.getElementById('sideSearch');
+  const filterCategory = document.getElementById('filterCategory');
+  const filterStatus = document.getElementById('filterStatus');
+  const themeBtn = document.getElementById('themeBtn');
+  const badgeCount = document.getElementById('badgeCount');
+  const sideToggle = document.getElementById('sideToggle');
+  const sidebar = document.getElementById('sidebar');
+
+  // Init theme
+  document.body.setAttribute('data-theme', state.theme);
+  themeBtn.setAttribute('aria-pressed', state.theme === 'dark' ? 'true' : 'false');
+  themeBtn.textContent = state.theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+
+  // Render
+  function render(){
+    const q = state.search.toLowerCase();
+    const list = courses.filter(c=>{
+      const matchesQ = !q || (c.title?.toLowerCase().includes(q)) || (c.desc?.toLowerCase().includes(q));
+      const matchesCat = !state.category || c.category === state.category;
+      const matchesStatus = !state.status || c.status === state.status;
+      return matchesQ && matchesCat && matchesStatus;
+    });
+
+    badgeCount.textContent = courses.length;
+
+    grid.innerHTML = '';
+    if(list.length === 0){
+      emptyState.style.display = 'block';
+      return;
+    }
+    emptyState.style.display = 'none';
+
+    list.forEach(c=>{
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.innerHTML = `
+        <h3>${c.title}</h3>
+        <div class="meta">
+          <span class="chip">${c.category || 'General'}</span>
+          <span class="chip">${c.status || 'In Progress'}</span>
+          ${c.badge ? `<span class="pill gold">${c.badge}</span>`:''}
+        </div>
+        <p class="desc">${c.desc || ''}</p>
+        <div class="ptext">${c.progress ?? 0}% complete</div>
+        <div class="progress" aria-label="${c.title} progress">
+          <span class="bar" style="width:${c.progress ?? 0}%;"></span>
+        </div>
+        <div class="meta">
+          ${(c.tags||[]).map(t=>`<span class="chip">${t}</span>`).join('')}
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="/course/${c.id}/">Continue</a>
+          ${(c.status==='Completed') ? '<span class="pill green">Certificate available</span>' : ''}
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // Events
+  search.addEventListener('input', e=>{ state.search = e.target.value; render(); });
+  sideSearch.addEventListener('input', e=>{ state.search = e.target.value; search.value = e.target.value; render(); });
+  filterCategory.addEventListener('change', e=>{ state.category = e.target.value; render(); });
+  filterStatus.addEventListener('change', e=>{ state.status = e.target.value; render(); });
+
+  themeBtn.addEventListener('click', ()=>{
+    state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', state.theme);
+    themeBtn.setAttribute('aria-pressed', state.theme === 'dark' ? 'true' : 'false');
+    themeBtn.textContent = state.theme === 'dark' ? '☀️ Light' : '🌙 Dark';
+    localStorage.setItem('rcic:theme', state.theme);
+  });
+
+  // Sidebar toggle (mobile)
+  sideToggle.addEventListener('click', ()=>{
+    const closed = sidebar.classList.toggle('closed');
+    sideToggle.setAttribute('aria-expanded', closed ? 'false' : 'true');
+  });
+
+  // First render
+  render();
+</script>
+</body>
+</html>

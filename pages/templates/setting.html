@@ -1,0 +1,415 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>Profile • Rabbani CiC</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+  :root{
+    --rcic-blue:#1e3a8a; --rcic-blue-600:#2747a8; --ink:#0f172a; --slate:#334155; --bg:#f6f7fb; --line:#e5e7eb;
+  }
+  body{
+    font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    background:
+      radial-gradient(1000px 500px at -10% -10%, rgba(30,58,138,.10), rgba(0,0,0,0) 60%),
+      radial-gradient(1000px 500px at 110% 110%, rgba(39,71,168,.08), rgba(0,0,0,0) 60%),
+      var(--bg);
+    color:var(--ink);
+    min-height:100vh;
+  }
+  .container-narrow{ max-width:1000px }
+  .page-title{ font-weight:700; letter-spacing:.2px }
+  .nav-pills .nav-link.active{
+    background:linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600));
+  }
+  .card{
+    border:1px solid #eef1f6; box-shadow:0 10px 28px rgba(0,0,0,.06); border-radius:14px;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--rcic-blue),var(--rcic-blue-600)); border:0; font-weight:600;
+    box-shadow:0 10px 22px rgba(30,58,138,.25);
+  }
+  .form-control:focus, .form-select:focus{ box-shadow:0 0 0 .2rem rgba(30,58,138,.15); border-color:#cbd5e1 }
+  .avatar-wrap{
+    display:flex; gap:16px; align-items:center;
+  }
+  .avatar{
+    width:92px; height:92px; border-radius:50%; object-fit:cover; border:3px solid #fff; box-shadow:0 6px 16px rgba(0,0,0,.15);
+    background:#fff;
+  }
+  .muted{ color:#6b7280; font-size:.92rem }
+  .chip{ display:inline-block; padding:.25rem .5rem; border-radius:999px; background:#eef2ff; color:#1f2a6b; border:1px solid #dbe4ff; font-size:.8rem }
+  .danger{ border:1px solid #fee2e2; background:#fff7f7 }
+  .toast-container{ z-index: 1080 }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+      <img src="{% static 'img/aa.png' %}" alt="" width="28" height="28">
+      <strong>Rabbani CiC</strong>
+    </a>
+    <div class="ms-auto">
+      <a class="btn btn-sm btn-light" href="{% url 'index' %}">Home</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container container-narrow py-4">
+  <div class="d-flex justify-content-between align-items-end mb-3">
+    <div>
+      <h1 class="page-title h3 mb-1">Profile & Account</h1>
+      <div class="muted">Manage your personal info, security, and preferences.</div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <!-- Left: Nav -->
+    <aside class="col-lg-3">
+      <div class="card p-3">
+        <ul class="nav nav-pills flex-column gap-2" id="settingsTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active w-100" id="profile-tab" data-bs-toggle="pill" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">
+              <i class="fa-regular fa-user me-1"></i> Profile
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link w-100" id="prefs-tab" data-bs-toggle="pill" data-bs-target="#preferences" type="button" role="tab" aria-controls="preferences" aria-selected="false">
+              <i class="fa-solid fa-gear me-1"></i> Preferences
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link w-100" id="danger-tab" data-bs-toggle="pill" data-bs-target="#dangerzone" type="button" role="tab" aria-controls="dangerzone" aria-selected="false">
+              <i class="fa-solid fa-triangle-exclamation me-1"></i> Danger Zone
+            </button>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Right: Panels -->
+    <section class="col-lg-9">
+      <div class="tab-content" id="settingsTabsContent">
+        <!-- Profile -->
+        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="card p-3 p-md-4">
+            <form id="formProfile" class="needs-validation" novalidate>
+              <div class="mb-3 avatar-wrap">
+                <img id="avatarPreview" class="avatar" src="https://via.placeholder.com/92x92.png?text=You" alt="Avatar preview">
+                <div>
+                  <div class="fw-semibold">Profile picture</div>
+                  <div class="muted mb-2">PNG or JPG, max 2MB.</div>
+                  <input type="file" id="avatarInput" accept="image/*" class="form-control form-control-sm" />
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="firstName">First name</label>
+                  <input type="text" id="firstName" class="form-control" required minlength="2" autocomplete="given-name">
+                  <div class="invalid-feedback">Please enter at least 2 characters.</div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="lastName">Last name</label>
+                  <input type="text" id="lastName" class="form-control" required minlength="2" autocomplete="family-name">
+                  <div class="invalid-feedback">Please enter at least 2 characters.</div>
+                </div>
+                <div class="col-md-8">
+                  <label class="form-label" for="email">Email</label>
+                  <input type="email" id="email" class="form-control" required autocomplete="email">
+                  <div class="invalid-feedback">Enter a valid email.</div>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label" for="phone">Phone (optional)</label>
+                  <input type="tel" id="phone" class="form-control" placeholder="+1 555 000 0000" autocomplete="tel">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label" for="country">Country</label>
+                  <input type="text" id="country" class="form-control">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="timezone">Timezone</label>
+                  <select id="timezone" class="form-select" required></select>
+                  <div class="invalid-feedback">Please select your timezone.</div>
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label" for="bio">Bio (optional)</label>
+                  <textarea id="bio" class="form-control" rows="3" placeholder="Tell us a little about you…"></textarea>
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-2">
+                  <button class="btn btn-primary" type="submit"><i class="fa-solid fa-floppy-disk me-1"></i> Save changes</button>
+                  <button class="btn btn-outline-secondary" type="button" id="resetProfile">Reset</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Preferences -->
+        <div class="tab-pane fade" id="preferences" role="tabpanel" aria-labelledby="prefs-tab">
+          <div class="card p-3 p-md-4">
+            <form id="formPrefs">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Theme</label>
+                  <div class="d-flex gap-2">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="theme" id="themeLight" value="light" checked>
+                      <label class="form-check-label" for="themeLight">Light</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="theme" id="themeDark" value="dark">
+                      <label class="form-check-label" for="themeDark">Dark</label>
+                    </div>
+                    <span class="chip">Preview only</span>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Email notifications</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="nAnnouncements" checked>
+                    <label class="form-check-label" for="nAnnouncements">Course announcements</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="nReminders" checked>
+                    <label class="form-check-label" for="nReminders">Due date reminders</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="nMarketing">
+                    <label class="form-check-label" for="nMarketing">Product updates & offers</label>
+                  </div>
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-2">
+                  <button class="btn btn-primary" type="submit"><i class="fa-regular fa-bell me-1"></i> Save preferences</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="tab-pane fade" id="dangerzone" role="tabpanel" aria-labelledby="danger-tab">
+          <div class="card p-3 p-md-4 danger">
+            <h5 class="text-danger"><i class="fa-solid fa-circle-exclamation me-1"></i> Danger Zone</h5>
+            <p class="muted">Deleting your account is permanent and cannot be undone. This will remove your profile and course progress.</p>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-outline-danger" id="exportData"><i class="fa-solid fa-download me-1"></i> Export my data (JSON)</button>
+              <button class="btn btn-danger" id="deleteAccount"><i class="fa-solid fa-user-slash me-1"></i> Delete account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- Toasts -->
+<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+  <div id="toast" class="toast align-items-center text-bg-dark border-0" role="status" aria-live="polite" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body" id="toastBody">Saved.</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ---------- CSRF ----------
+  function getCookie(name){
+    const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'); 
+    return m ? decodeURIComponent(m.pop()) : '';
+  }
+  const CSRF = getCookie('csrftoken');
+
+  // ---------- UI helpers ----------
+  const toast = new bootstrap.Toast(document.getElementById('toast'));
+  const toastBody = document.getElementById('toastBody');
+  const showToast = (msg) => { toastBody.textContent = msg; toast.show(); };
+
+  // ---------- Populate selects / defaults ----------
+  const tzSel = document.getElementById('timezone');
+  const zones = (Intl.supportedValuesOf ? Intl.supportedValuesOf('timeZone') : []);
+  const guessed = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+  tzSel.innerHTML = '<option value="">Select timezone</option>' + zones.map(z => `<option value="${z}" ${z===guessed?'selected':''}>${z}</option>`).join('');
+
+  // Infer country
+  const countryInput = document.getElementById('country');
+  const lang = navigator.language || '';
+  const inferredCountry = (lang.split('-')[1] || '').toUpperCase();
+  if(inferredCountry && !countryInput.value) countryInput.value = inferredCountry;
+
+  // Avatar preview
+  const avatarInput = document.getElementById('avatarInput');
+  const avatarPreview = document.getElementById('avatarPreview');
+  avatarInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    if(file.size > 2 * 1024 * 1024){
+      showToast('Image too large (max 2MB).');
+      avatarInput.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (ev) => { avatarPreview.src = ev.target.result; };
+    reader.readAsDataURL(file);
+  });
+
+  // Toggle password reveal
+  document.querySelectorAll('[data-toggle="reveal"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.querySelector(btn.dataset.target);
+      if(!target) return;
+      target.type = target.type === 'password' ? 'text' : 'password';
+    });
+  });
+
+  // ---------- Load from backend ----------
+  async function loadProfileFromAPI(){
+    // GET /api/profile/
+    const r1 = await fetch("{% url 'api_profile' %}", {credentials:'same-origin'});
+    if(!r1.ok) throw new Error('Failed to load profile');
+    const prof = await r1.json();
+
+    document.getElementById('firstName').value = prof.first_name || '';
+    document.getElementById('lastName').value  = prof.last_name || '';
+    document.getElementById('email').value     = prof.email || '';
+    document.getElementById('phone').value     = prof.phone || '';
+    document.getElementById('country').value   = prof.country || (document.getElementById('country').value || '');
+    if (prof.timezone) tzSel.value = prof.timezone;
+    document.getElementById('bio').value       = prof.bio || '';
+    if (prof.avatar_url) avatarPreview.src     = prof.avatar_url;
+
+    // GET /api/preferences
+    const r2 = await fetch("{% url 'api_preferences' %}", {credentials:'same-origin'});
+    if(r2.ok){
+      const prefs = await r2.json();
+      (prefs.theme === 'dark' ? document.getElementById('themeDark') : document.getElementById('themeLight')).checked = true;
+      document.getElementById('nAnnouncements').checked = !!prefs.nAnnouncements;
+      document.getElementById('nReminders').checked     = !!prefs.nReminders;
+      document.getElementById('nMarketing').checked     = !!prefs.nMarketing;
+      // live preview theme
+      document.documentElement.setAttribute('data-theme', prefs.theme || 'light');
+    }
+  }
+
+  // ---------- Profile form submit (multipart) ----------
+  const formProfile = document.getElementById('formProfile');
+  document.getElementById('resetProfile').addEventListener('click', async () => {
+    await loadProfileFromAPI(); showToast('Reset changes.');
+  });
+
+  formProfile.addEventListener('submit', async (e) => {
+    if(!formProfile.checkValidity()){
+      e.preventDefault(); e.stopPropagation();
+      formProfile.classList.add('was-validated');
+      return;
+    }
+    e.preventDefault();
+
+    const fd = new FormData();
+    fd.append('first_name', document.getElementById('firstName').value.trim());
+    fd.append('last_name',  document.getElementById('lastName').value.trim());
+    fd.append('email',      document.getElementById('email').value.trim());
+    fd.append('phone',      document.getElementById('phone').value.trim());
+    fd.append('country',    document.getElementById('country').value.trim());
+    fd.append('timezone',   document.getElementById('timezone').value);
+    fd.append('bio',        document.getElementById('bio').value.trim());
+    if (avatarInput.files[0]) fd.append('avatar', avatarInput.files[0]);
+
+    const res = await fetch("{% url 'api_profile' %}", {
+      method: 'POST',  // allowed by decorator
+      body: fd,
+      headers: {'X-CSRFToken': CSRF},
+      credentials: 'same-origin'
+    });
+    if(!res.ok){ showToast('Failed to update profile'); return; }
+    showToast('Profile updated');
+  });
+
+  // ---------- Security (password change) ----------
+  const formSecurity = document.getElementById('formSecurity');
+  const newPw = document.getElementById('newPw');
+  const confirmPw = document.getElementById('confirmPw');
+  function passwordsMatch(){ return newPw.value && confirmPw.value && newPw.value === confirmPw.value; }
+  confirmPw.addEventListener('input', () => {
+    confirmPw.setCustomValidity(passwordsMatch() ? '' : 'Passwords do not match');
+  });
+
+  formSecurity.addEventListener('submit', async (e) => {
+    if(!passwordsMatch()){
+      confirmPw.setCustomValidity('Passwords do not match');
+    } else {
+      confirmPw.setCustomValidity('');
+    }
+    if(!formSecurity.checkValidity()){
+      e.preventDefault(); e.stopPropagation();
+      formSecurity.classList.add('was-validated');
+      return;
+    }
+    e.preventDefault();
+
+  });
+
+  // ---------- Preferences ----------
+  const formPrefs = document.getElementById('formPrefs');
+  formPrefs.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData();
+    const theme = document.getElementById('themeDark').checked ? 'dark' : 'light';
+    fd.append('theme', theme);
+    fd.append('nAnnouncements', document.getElementById('nAnnouncements').checked ? 'true' : 'false');
+    fd.append('nReminders',     document.getElementById('nReminders').checked ? 'true' : 'false');
+    fd.append('nMarketing',     document.getElementById('nMarketing').checked ? 'true' : 'false');
+
+    const res = await fetch("{% url 'api_preferences' %}", {
+      method: 'POST', headers: {'X-CSRFToken': CSRF}, body: fd, credentials:'same-origin'
+    });
+    if(!res.ok){ showToast('Failed to save preferences'); return; }
+
+    // live preview
+    document.documentElement.setAttribute('data-theme', theme);
+    showToast('Preferences saved');
+  });
+
+  // ---------- Export & Delete ----------
+  document.getElementById('exportData').addEventListener('click', async () => {
+    const res = await fetch("#", {credentials:'same-origin'});
+    if(!res.ok){ showToast('Export failed'); return; }
+    const data = await res.json();
+    const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'rabbani-profile-export.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  document.getElementById('deleteAccount').addEventListener('click', async () => {
+    if(!confirm('This will permanently delete your account. Continue?')) return;
+    const res = await fetch("{% url 'api_delete_account' %}", {
+      method:'POST', headers:{'X-CSRFToken': CSRF}, credentials:'same-origin'
+    });
+    if(!res.ok){ showToast('Delete failed'); return; }
+    // Back to home (or login)
+    location.href = "{% url 'index' %}";
+  });
+
+  // ---------- Init ----------
+  loadProfileFromAPI().catch(()=> showToast('Could not load profile'));
+</script>
+
+</body>
+</html>

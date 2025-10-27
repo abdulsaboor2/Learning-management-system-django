@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML & CSS Quiz</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+.question { display: none; margin-bottom: 20px; }
+.correct { color: green; font-weight: bold; }
+.incorrect { color: red; font-weight: bold; }
+.pass { color: green; font-size: 18px; font-weight: bold; }
+.fail { color: red; font-size: 18px; font-weight: bold; }
+button { margin-top: 20px; padding: 10px 20px; }
+</style>
+</head>
+<body>
+<h1>HTML & CSS Knowledge Quiz</h1>
+<form id="quizForm">
+
+<!-- Q1 -->
+<div class="question" id="q1Box">
+<p>Which HTML tags are commonly used for building navigation menus?</p>
+<label><input type="radio" name="q1" value="7"> &lt;table&gt; and &lt;tr&gt;</label><br>
+<label><input type="radio" name="q1" value="8"> &lt;ul&gt; and &lt;li&gt;</label><br>
+<label><input type="radio" name="q1" value="9"> &lt;section&gt; and &lt;article&gt;</label><br>
+<label><input type="radio" name="q1" value="6"> &lt;p&gt; and &lt;span&gt;</label>
+<p class="feedback" id="f1"></p>
+<button type="button" onclick="nextQuestion(1)">Next</button>
+</div>
+
+<!-- Q2 -->
+<div class="question" id="q2Box">
+<p>Which CSS property allows an element to stay in place while scrolling until a point is reached?</p>
+<label><input type="radio" name="q2" value="7"> fixed</label><br>
+<label><input type="radio" name="q2" value="8"> relative</label><br>
+<label><input type="radio" name="q2" value="9"> sticky</label><br>
+<label><input type="radio" name="q2" value="6"> absolute</label><br>
+<p class="feedback" id="f2"></p>
+<button type="button" onclick="nextQuestion(2)">Next</button>
+</div>
+
+<!-- Q3 -->
+<div class="question" id="q3Box">
+<p>Which CSS pseudo-class applies when a user hovers over a link?</p>
+<label><input type="radio" name="q3" value="7"> :active</label><br>
+<label><input type="radio" name="q3" value="8"> :hover</label><br>
+<label><input type="radio" name="q3" value="9"> :visited</label><br>
+<label><input type="radio" name="q3" value="6"> :focus</label><br>
+<p class="feedback" id="f3"></p>
+<button type="button" onclick="nextQuestion(3)">Next</button>
+</div>
+
+<!-- Q4 -->
+<div class="question" id="q4Box">
+<p>Which CSS property is used to control the stacking order of elements?</p>
+<label><input type="radio" name="q4" value="7"> display</label><br>
+<label><input type="radio" name="q4" value="8"> position</label><br>
+<label><input type="radio" name="q4" value="9"> z-index</label><br>
+<label><input type="radio" name="q4" value="6"> float</label><br>
+<p class="feedback" id="f4"></p>
+<button type="button" onclick="nextQuestion(4)">Next</button>
+</div>
+
+<!-- Q5 -->
+<div class="question" id="q5Box">
+<p>Which CSS rule is required to define animations?</p>
+<label><input type="radio" name="q5" value="7"> @animations</label><br>
+<label><input type="radio" name="q5" value="8"> @keyframes</label><br>
+<label><input type="radio" name="q5" value="9"> @transition</label><br>
+<label><input type="radio" name="q5" value="6"> @hover</label><br>
+<p class="feedback" id="f5"></p>
+<button type="button" onclick="nextQuestion(5)">Next</button>
+</div>
+
+<!-- Q6 -->
+<div class="question" id="q6Box">
+<p>Which CSS property is commonly used with @keyframes to make objects appear smoothly?</p>
+<label><input type="radio" name="q6" value="7"> background-color</label><br>
+<label><input type="radio" name="q6" value="8"> z-index</label><br>
+<label><input type="radio" name="q6" value="9"> opacity</label><br>
+<label><input type="radio" name="q6" value="6"> float</label><br>
+<p class="feedback" id="f6"></p>
+<button type="button" onclick="nextQuestion(6)">Next</button>
+</div>
+
+<!-- Q7 -->
+<div class="question" id="q7Box">
+<p>Which CSS layout method allows easy horizontal and vertical alignment of items?</p>
+<label><input type="radio" name="q7" value="7"> float</label><br>
+<label><input type="radio" name="q7" value="8"> flexbox</label><br>
+<label><input type="radio" name="q7" value="9"> inline-block</label><br>
+<label><input type="radio" name="q7" value="6"> grid</label><br>
+<p class="feedback" id="f7"></p>
+<button type="button" onclick="nextQuestion(7)">Next</button>
+</div>
+
+<!-- Q8 -->
+<div class="question" id="q8Box">
+<p>Which CSS pseudo-class targets links that have already been visited?</p>
+<label><input type="radio" name="q8" value="7"> :hover</label><br>
+<label><input type="radio" name="q8" value="8"> :focus</label><br>
+<label><input type="radio" name="q8" value="9"> :visited</label><br>
+<label><input type="radio" name="q8" value="6"> :checked</label><br>
+<p class="feedback" id="f8"></p>
+<button type="button" onclick="nextQuestion(8)">Next</button>
+</div>
+
+<!-- Q9 -->
+<div class="question" id="q9Box">
+<p>Which CSS property adds smooth effects when a property value changes?</p>
+<label><input type="radio" name="q9" value="7"> animation</label><br>
+<label><input type="radio" name="q9" value="8"> transition</label><br>
+<label><input type="radio" name="q9" value="9"> keyframes</label><br>
+<label><input type="radio" name="q9" value="6"> transform</label><br>
+<p class="feedback" id="f9"></p>
+<button type="button" onclick="nextQuestion(9)">Next</button>
+</div>
+
+<!-- Q10 -->
+<div class="question" id="q10Box">
+<p>What is a good practice in web development projects?</p>
+<label><input type="radio" name="q10" value="7"> Always rewrite code for each new project</label><br>
+<label><input type="radio" name="q10" value="8"> Never use CSS</label><br>
+<label><input type="radio" name="q10" value="9"> Reuse code where applicable</label><br>
+<label><input type="radio" name="q10" value="6"> Avoid using any HTML tags</label><br>
+<p class="feedback" id="f10"></p>
+<button type="button" onclick="nextQuestion(10)">Next</button>
+</div>
+
+</form>
+
+<h2 id="score"></h2>
+<h2 id="result"></h2>
+
+<script>
+const answers = {
+q1: "8",
+q2: "9",
+q3: "8",
+q4: "9",
+q5: "8",
+q6: "9",
+q7: "8",
+q8: "9",
+q9: "8",
+q10: "9"
+};
+
+let score = 0;
+let total = Object.keys(answers).length;
+
+// Show first question
+document.getElementById("q1Box").style.display = "block";
+
+function nextQuestion(num) {
+  const feedback = document.getElementById("f" + num);
+  const selected = document.querySelector(`input[name="q${num}"]:checked`);
+
+  if (!selected) {
+    feedback.textContent = "No answer selected.";
+    feedback.className = "feedback incorrect";
+    return;
+  } else if (selected.value === answers[`q${num}`]) {
+    feedback.textContent = "Correct!";
+    feedback.className = "feedback correct";
+    score++;
+  } else {
+    feedback.textContent = "Incorrect!";
+    feedback.className = "feedback incorrect";
+  }
+
+  // Hide current question after feedback delay, show next
+  setTimeout(() => {
+    document.getElementById(`q${num}Box`).style.display = "none";
+    if (num < total) {
+      document.getElementById(`q${num + 1}Box`).style.display = "block";
+    } else {
+      finishQuiz();
+    }
+  }, 1000);
+}
+
+function finishQuiz() {
+  const percentage = (score / total) * 100;
+  document.getElementById("score").textContent = `You scored ${score} out of ${total} (${percentage.toFixed(0)}%)`;
+
+  if (percentage >= 60) {
+    document.getElementById("result").textContent = "Congratulations! You Passed.";
+    document.getElementById("result").className = "pass";
+  } else {
+    document.getElementById("result").textContent = "Sorry, You Failed.";
+    document.getElementById("result").className = "fail";
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 Question Quiz</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+.question { display: none; margin-bottom: 20px; }
+.correct { color: green; font-weight: bold; }
+.incorrect { color: red; font-weight: bold; }
+.pass { color: green; font-size: 18px; font-weight: bold; }
+.fail { color: red; font-size: 18px; font-weight: bold; }
+button { margin-top: 20px; padding: 10px 20px; }
+</style>
+</head>
+<body>
+<h1>10 Question Quiz</h1>
+<form id="quizForm">
+
+<!-- Question 1 -->
+<div class="question" id="q1Box">
+<p>What property is used to remove list markers from a navigation bar?</p>
+<label><input type="radio" name="q1" value="7"> display: block;</label><br>
+<label><input type="radio" name="q1" value="8"> list-style-type: none;</label><br>
+<label><input type="radio" name="q1" value="9"> text-decoration: none;</label><br>
+<label><input type="radio" name="q1" value="6"> margin: 0;</label>
+<p class="feedback" id="f1"></p>
+<button type="button" onclick="nextQuestion(1)">Next</button>
+</div>
+
+<!-- Question 2 -->
+<div class="question" id="q2Box">
+<p>Which CSS property aligns list items horizontally in a navigation bar?</p>
+<label><input type="radio" name="q2" value="7"> display: inline;</label><br>
+<label><input type="radio" name="q2" value="8"> display: block;</label><br>
+<label><input type="radio" name="q2" value="9"> float: left;</label><br>
+<label><input type="radio" name="q2" value="6"> position: absolute;</label><br>
+<p class="feedback" id="f2"></p>
+<button type="button" onclick="nextQuestion(2)">Next</button>
+</div>
+
+<!-- Question 3 -->
+<div class="question" id="q3Box">
+<p>In the CSS box model, which part surrounds the content and padding?</p>
+<label><input type="radio" name="q3" value="7"> Margin</label><br>
+<label><input type="radio" name="q3" value="8"> Content</label><br>
+<label><input type="radio" name="q3" value="9"> Border</label><br>
+<label><input type="radio" name="q3" value="6"> Outline</label><br>
+<p class="feedback" id="f3"></p>
+<button type="button" onclick="nextQuestion(3)">Next</button>
+</div>
+
+<!-- Question 4 -->
+<div class="question" id="q4Box">
+<p>Which of the following clears an area outside the border?</p>
+<label><input type="radio" name="q4" value="7"> Padding</label><br>
+<label><input type="radio" name="q4" value="8"> Margin</label><br>
+<label><input type="radio" name="q4" value="9"> Border</label><br>
+<label><input type="radio" name="q4" value="6"> Float</label><br>
+<p class="feedback" id="f4"></p>
+<button type="button" onclick="nextQuestion(4)">Next</button>
+</div>
+
+<!-- Question 5 -->
+<div class="question" id="q5Box">
+<p>By default, block-level elements:</p>
+<label><input type="radio" name="q5" value="7"> Do not start on a new line</label><br>
+<label><input type="radio" name="q5" value="8"> Always float left</label><br>
+<label><input type="radio" name="q5" value="9"> Start on a new line</label><br>
+<label><input type="radio" name="q5" value="6"> Can only contain inline elements</label><br>
+<p class="feedback" id="f5"></p>
+<button type="button" onclick="nextQuestion(5)">Next</button>
+</div>
+
+<!-- Question 6 -->
+<div class="question" id="q6Box">
+<p>Which positioning value makes an element stay in the same place even when the page is scrolled?</p>
+<label><input type="radio" name="q6" value="7"> Relative</label><br>
+<label><input type="radio" name="q6" value="8"> Fixed</label><br>
+<label><input type="radio" name="q6" value="9"> Sticky</label><br>
+<label><input type="radio" name="q6" value="6"> Absolute</label><br>
+<p class="feedback" id="f6"></p>
+<button type="button" onclick="nextQuestion(6)">Next</button>
+</div>
+
+<!-- Question 7 -->
+<div class="question" id="q7Box">
+<p>Which CSS float value ensures the element does not float and stays in its default position?</p>
+<label><input type="radio" name="q7" value="7"> left</label><br>
+<label><input type="radio" name="q7" value="8"> right</label><br>
+<label><input type="radio" name="q7" value="9"> none</label><br>
+<label><input type="radio" name="q7" value="6"> inherit</label><br>
+<p class="feedback" id="f7"></p>
+<button type="button" onclick="nextQuestion(7)">Next</button>
+</div>
+
+<!-- Question 8 -->
+<div class="question" id="q8Box">
+<p>To use CSS animations, which rule must be defined?</p>
+<label><input type="radio" name="q8" value="7"> @animation</label><br>
+<label><input type="radio" name="q8" value="8"> @keyframes</label><br>
+<label><input type="radio" name="q8" value="9"> @style</label><br>
+<label><input type="radio" name="q8" value="6"> @transition</label><br>
+<p class="feedback" id="f8"></p>
+<button type="button" onclick="nextQuestion(8)">Next</button>
+</div>
+
+<!-- Question 9 -->
+<div class="question" id="q9Box">
+<p>Which animation property specifies how many times an animation should be played?</p>
+<label><input type="radio" name="q9" value="7"> animation-duration</label><br>
+<label><input type="radio" name="q9" value="8"> animation-delay</label><br>
+<label><input type="radio" name="q9" value="9"> animation-iteration-count</label><br>
+<label><input type="radio" name="q9" value="6"> animation-fill-mode</label><br>
+<p class="feedback" id="f9"></p>
+<button type="button" onclick="nextQuestion(9)">Next</button>
+</div> 
+
+<!-- Question 10 -->
+<div class="question" id="q10Box">
+<p>The sticky positioning value:</p>
+<label><input type="radio" name="q10" value="7"> Keeps the element fixed at the top of the page</label><br>
+<label><input type="radio" name="q10" value="8"> Positions the element relative to the nearest ancestor</label><br>
+<label><input type="radio" name="q10" value="9"> Toggles between relative and fixed based on scroll</label><br>
+<label><input type="radio" name="q10" value="6"> Does not move the element at all</label><br>
+<p class="feedback" id="f10"></p>
+<button type="button" onclick="nextQuestion(10)">Next</button>
+</div>
+
+</form>
+
+<h2 id="score"></h2>
+<h2 id="result"></h2>
+
+<script>
+const answers = {
+q1: "8",
+q2: "7",
+q3: "9",
+q4: "8",
+q5: "9",
+q6: "8",
+q7: "9",
+q8: "8",
+q9: "9",
+q10: "9"
+};
+
+let score = 0;
+let total = Object.keys(answers).length;
+
+// Show first question
+document.getElementById("q1Box").style.display = "block";
+
+function nextQuestion(num) {
+  const feedback = document.getElementById("f" + num);
+  const selected = document.querySelector(`input[name="q${num}"]:checked`);
+
+  if (!selected) {
+    feedback.textContent = "No answer selected.";
+    feedback.className = "feedback incorrect";
+  } else if (selected.value === answers[`q${num}`]) {
+    feedback.textContent = "Correct!";
+    feedback.className = "feedback correct";
+    score++;
+  } else {
+    feedback.textContent = "Incorrect!";
+    feedback.className = "feedback incorrect";
+  }
+
+  // Hide current question after feedback delay, show next
+  setTimeout(() => {
+    document.getElementById(`q${num}Box`).style.display = "none";
+    if (num < total) {
+      document.getElementById(`q${num + 1}Box`).style.display = "block";
+    } else {
+      finishQuiz();
+    }
+  }, 1000);
+}
+
+function finishQuiz() {
+  const percentage = (score / total) * 100;
+  document.getElementById("score").textContent = `You scored ${score} out of ${total} (${percentage.toFixed(0)}%)`;
+
+  if (percentage >= 60) {
+    document.getElementById("result").textContent = "Congratulations! You Passed.";
+    document.getElementById("result").className = "pass";
+  } else {
+    document.getElementById("result").textContent = "Sorry, You Failed.";
+    document.getElementById("result").className = "fail";
+  }
+}
+</script>
+</body>
+</html>
