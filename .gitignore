@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+env/
+venv/
+
+# Django
+db.sqlite3
+/media/
+/staticfiles/
+# /static/   # uncomment if you keep a project-level static dir in the repo
+
+# Env & secrets
+.env
+*.env
+*.key
+*.pem
+
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
