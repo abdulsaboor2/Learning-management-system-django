@@ -23,4 +23,8 @@ A Django-based LMS with courses → modules → lessons, downloadable resources,
 - **Static quizzes:** `/quiz/1 … /quiz/8` (auto-provisions a container course/module/lesson/quiz on first visit).
 
 ## 🗂 Project Structure
-
+- learning_management_system/ # Django project
+- settings.py, urls.py, wsgi.py
+- pages/ # App: models, views, admin, forms, templates, static
+- media/ # Uploaded lesson resources & avatars (dev)
+- manage.py
